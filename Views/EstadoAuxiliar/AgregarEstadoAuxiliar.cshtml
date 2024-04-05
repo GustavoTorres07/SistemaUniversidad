@@ -1,0 +1,75 @@
+﻿@model SistemaUniversidad.Models.EstadoAuxiliarCLS
+
+@{
+    ViewBag.Title = "AgregarEstadoAuxiliar";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<style>
+    /* Agrega un estilo personalizado para aumentar el tamaño de la fuente del nombre de la ciudad */
+    .nombre-ciudad {
+        font-size: 18px; /* Puedes ajustar el tamaño según tus preferencias */
+        /* Otros estilos si es necesario */
+    }
+    /* Agrega un estilo personalizado para aumentar el tamaño de la fuente del nombre de la ciudad */
+    .nombre-ciudad {
+        font-size: 18px; /* Puedes ajustar el tamaño según tus preferencias */
+        /* Otros estilos si es necesario */
+    }
+
+    /* Cambia el color del encabezado "Agregar un Ciclo" */
+    .card-header.custom-header {
+        background-color: #3AA4F0; /* Cambia el color a naranja, puedes ajustarlo según tu preferencia */
+    }
+</style>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header custom-header text-white text-center">
+                    <h4 class="mb-0">Agregar un Nuevo Estado de Auxiliar</h4>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.nombreEstadoAuxiliar, htmlAttributes: new { @class = "col-md-4 col-form-label text-md-right" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.nombreEstadoAuxiliar, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese nombre del estado auxiliar" } })
+                                @Html.ValidationMessageFor(model => model.nombreEstadoAuxiliar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <label for="estado" class="col-md-4 col-form-label text-md-right">Estado</label>
+                            <div class="col-md-8 custom-checkbox">
+                                <label class="container">
+                                    <span style="color: red;">Seleccionar para activar el estado</span>
+                                    @Html.CheckBoxFor(model => model.estado, new { @class = "hidden-checkbox" })
+                                    <span class="checkmark"></span>
+                                </label>
+                                @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-8 offset-md-4">
+                                <br />
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                                <a href="@Url.Action("Index")" class="btn btn-danger">Cancelar</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

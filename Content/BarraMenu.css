@@ -1,0 +1,113 @@
+﻿/* Estilos generales */
+html {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    box-sizing: inherit;
+}
+
+/* Estilos de la barra de navegación */
+nav {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #41488B, #87CEEB);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+    nav ul {
+        list-style-type: none;
+        padding-inline-start: 0;
+        margin: 0;
+    }
+
+        nav ul li {
+            position: relative;
+            white-space: nowrap;
+        }
+
+            nav ul li:hover {
+                background: linear-gradient(to right, #FF0000, #FF6347); /* Modificado para destacar los elementos */
+                box-shadow: 0 6px 10px rgba(0, 0, 0, 0.8);
+                color: black;
+            }
+
+    nav > ul > li:hover > a {
+        color: black; /* Cambia el color del texto del menú al pasar el ratón */
+    }
+
+    nav ul ul {
+        display: none;
+        position: absolute;
+        background: linear-gradient(to right, #41488B, #6E7590);
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 999; /* Ajustado para asegurarse de que los submenús estén por encima del card */
+    }
+
+    nav > ul {
+        display: flex;
+    }
+
+        nav > ul > li ul {
+            top: 100%;
+            left: 0;
+        }
+
+            nav > ul > li ul ul {
+                top: 0;
+                left: 100%;
+            }
+
+        nav > ul > li:hover > ul,
+        nav > ul > li li:hover > ul {
+            display: block;
+        }
+
+    nav a {
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+        padding: 1em;
+    }
+
+        nav a:not(:only-child)::after {
+            content: "\f107";
+            font-family: 'Font Awesome 5 Free';
+            margin-left: 0.5em;
+            font-weight: 900;
+        }
+
+    nav ul ul li:hover > a {
+        color: black; /* Mantén el color del texto del submenú al pasar el ratón */
+    }
+
+.card {
+    margin-top: 20px;
+    z-index: 0; /* Ajusta el índice de apilamiento para asegurarte de que esté detrás de los submenús */
+}
+
+/* Estilos del texto del logotipo */
+.logo-text {
+    font-size: 1em;
+    margin-left: 0.5em;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+/* Estilos del pie de página */
+.footer {
+    background: linear-gradient(to right, #41488B, #87CEEB);
+    color: white;
+    text-align: center;
+    padding: 0em 0;
+    position: fixed;
+    bottom: 0em;
+    width: 100%;
+}

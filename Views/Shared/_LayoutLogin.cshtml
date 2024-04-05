@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesion</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="~/Content/Login.css">
+</head>
+<body>
+
+    <div class="main">
+
+        <div class="container b-container" id="b-container">
+            <form class="form" id="b-form" @*method=""*@ action="">
+                <h2 class="form_title title">SistemaUniversidad v1.0</h2>
+                <div class="form__icons">
+                    <i class='bx bxl-facebook-circle'></i>
+                    <i class='bx bxl-instagram-alt'></i>
+                    <i class='bx bxl-twitter'></i>
+                </div>
+                <span class="form__span">Ingresa con tu USUARIO y CLAVE</span>
+                <input class="form__input" type="text" placeholder="Usuario">
+                <input class="form__input" type="password" placeholder="Clave"><a class="form__link">Olvide Mi Clave</a>
+                <button class="form__button button submit">Ingresar</button>
+            </form>
+            @RenderBody()  <!-- Aquí renderizará el contenido de la vista específica -->
+
+        </div>
+
+
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 SistemaUniversidad v1.0. Desarrollado por Gustavo E. Torres - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+
+</html>
+
+
+@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+            <div class="container">
+                @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>*@
+

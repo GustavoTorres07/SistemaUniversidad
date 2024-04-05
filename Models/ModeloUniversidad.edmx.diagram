@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="43405231aedd42448da8c885fade2d5c" Name="Diagram1">
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.ADMINISTRADOR" Width="1.5" PointX="8.75" PointY="1.125" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.AUXILIAR" Width="1.5" PointX="3" PointY="9.75" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.CARRERA" Width="1.5" PointX="3" PointY="16.125" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.CICLO" Width="1.5" PointX="3.75" PointY="23.125" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.CIUDAD" Width="1.5" PointX="0.75" PointY="11.125" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.ESTADOAUXILIAR" Width="1.5" PointX="0.75" PointY="14.25" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.ESTADOESTUDIANTE" Width="1.5" PointX="3.75" PointY="19.25" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.ESTADOINSCRIPCIONESTUDIANTE" Width="1.5" PointX="6" PointY="15.25" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.ESTADOINSCRIPCIONPROFESOR" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.ESTADOMATERIA" Width="1.5" PointX="6" PointY="2.125" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.ESTADOPROFESOR" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.ESTUDIANTE" Width="1.5" PointX="6" PointY="10" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.GESTIONMATERIA" Width="1.5" PointX="8.25" PointY="4.625" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.INSCRIPCIONESTUDIANTE" Width="1.5" PointX="8.25" PointY="10.5" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.INSCRIPCIONPROFESOR" Width="1.5" PointX="5.25" PointY="4.75" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.MATERIA" Width="1.5" PointX="6" PointY="22.5" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.PLANESTUDIO" Width="1.5" PointX="8.25" PointY="19.5" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.PROFESION" Width="1.5" PointX="0.75" PointY="2.625" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.PROFESOR" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="SistemaUniversidadDBModel.SEXO" Width="1.5" PointX="0.75" PointY="5.125" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_AUXILIAR_CIUDAD" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_AUXILIAR_ESTADOAUXILIAR" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_AUXILIAR_PROFESION" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_AUXILIAR_SEXO" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_CARRERA" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_INSCRIPCIONPROFESOR_CARRERA" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_MATERIA_CARRERA" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_PLANESTUDIO_CARRERA" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_CICLO" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_MATERIA_CICLO" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_PLANESTUDIO_CICLO" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_ESTUDIANTE_CIUDAD" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_PROFESOR_CIUDAD" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_ESTUDIANTE_ESTADOESTUDIANTE" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_INSCRIPCIONPROFESOR_ESTADOINSCRIPCIONPROFESOR" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_GESTIONMATERIA_ESTADOMATERIA1" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_PROFESOR_ESTADOPROFESOR" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_ESTUDIANTE_SEXO" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_GESTIONMATERIA_ESTUDIANTE1" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_ESTUDIANTE" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_GESTIONMATERIA_MATERIA1" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_GESTIONMATERIA_PROFESOR1" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_MATERIA" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_INSCRIPCIONPROFESOR_PROFESOR" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_PLANESTUDIO_MATERIA" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_PROFESOR_PROFESION" />
+        <AssociationConnector Association="SistemaUniversidadDBModel.FK_PROFESOR_SEXO" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
