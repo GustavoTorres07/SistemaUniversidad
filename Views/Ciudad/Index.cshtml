@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,32 +19,25 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4"><u>Lista de Ciudades</u></h2>
 
-
     <!-- Botón para crear una nueva ciudad -->
     <div class="mb-3">
         <a href="@Url.Action("AgregarCiudad", "Ciudad")" class="btn btn-success">Crear Nueva Ciudad</a>
-
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped centrar-contenido">
+        <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>
-                        Nombre de Ciudad
-                    </th>
-                    <th>Funciones</th>
+                    <th class="text-center" style="max-width: 200px;">Nombre de Ciudad</th>
+                    <th class="text-center" style="max-width: 150px;">Funciones</th>
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nombreCiudad)
-                        </td>
-                        <td>
+                        <td class="text-center" style="max-width: 200px;">@Html.DisplayFor(modelItem => item.nombreCiudad)</td>
+                        <td class="text-center" style="max-width: 150px;">
                             <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarCiudad", "Ciudad", new { idCiudad = item.idCiudad })'">
                                 Editar
                             </button>
@@ -54,37 +46,8 @@
                             </button>
                         </td>
                     </tr>
-                 }
+                }
             </tbody>
         </table>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

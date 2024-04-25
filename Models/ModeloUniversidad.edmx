@@ -164,9 +164,9 @@
             <PropertyRef Name="idMateria" />
           </Key>
           <Property Name="idMateria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreMateria" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="ciclo_id" Type="int" Nullable="false" />
           <Property Name="carrera_id" Type="int" Nullable="false" />
-          <Property Name="nombreMateria" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="codigoMateria" Type="int" />
           <Property Name="correlativas" Type="varchar" MaxLength="250" />
         </EntityType>
@@ -1019,9 +1019,9 @@
             <PropertyRef Name="idMateria" />
           </Key>
           <Property Name="idMateria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreMateria" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="ciclo_id" Type="Int32" Nullable="false" />
           <Property Name="carrera_id" Type="Int32" Nullable="false" />
-          <Property Name="nombreMateria" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="codigoMateria" Type="Int32" />
           <Property Name="correlativas" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CARRERA" Relationship="SistemaUniversidadDBModel.FK_MATERIA_CARRERA" FromRole="MATERIA" ToRole="CARRERA" />
@@ -1605,9 +1605,9 @@
               <MappingFragment StoreEntitySet="MATERIA">
                 <ScalarProperty Name="correlativas" ColumnName="correlativas" />
                 <ScalarProperty Name="codigoMateria" ColumnName="codigoMateria" />
-                <ScalarProperty Name="nombreMateria" ColumnName="nombreMateria" />
                 <ScalarProperty Name="carrera_id" ColumnName="carrera_id" />
                 <ScalarProperty Name="ciclo_id" ColumnName="ciclo_id" />
+                <ScalarProperty Name="nombreMateria" ColumnName="nombreMateria" />
                 <ScalarProperty Name="idMateria" ColumnName="idMateria" />
               </MappingFragment>
             </EntityTypeMapping>

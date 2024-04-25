@@ -102,10 +102,17 @@ namespace SistemaUniversidad.Controllers
 
                 using (var db = new UniversidadContext())
                 {
-                    // Buscar la ciudad a editar en la base de datos
+                    // Buscar el estado original en la base de datos
                     var estadoAuxiliarOriginal = db.ESTADOAUXILIAR.Find(estadoAuxiliar.idEstadoAuxiliar);
 
-                    // Actualizar los datos del ESTADOAUXILIAR
+                    // Verificar si el nuevo nombre del estado es igual al nombre de otro estado existente
+                    if (db.ESTADOAUXILIAR.Any(ea => ea.nombreEstadoAuxiliar == estadoAuxiliar.nombreEstadoAuxiliar && ea.idEstadoAuxiliar != estadoAuxiliar.idEstadoAuxiliar))
+                    {
+                        ModelState.AddModelError("nombreEstadoAuxiliar", "Ya existe un Estado con este nombre.");
+                        return View(estadoAuxiliar);
+                    }
+
+                    // Actualizar los datos del estado
                     estadoAuxiliarOriginal.nombreEstadoAuxiliar = estadoAuxiliar.nombreEstadoAuxiliar;
                     estadoAuxiliarOriginal.estado = estadoAuxiliar.estado;
 
@@ -122,9 +129,6 @@ namespace SistemaUniversidad.Controllers
                 throw;
             }
         }
-
-
-
 
 
 

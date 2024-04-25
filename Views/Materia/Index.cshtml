@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,65 +18,34 @@
 
 <div class="container mt-5">
     <h2 class="text-center mb-4"><u>Lista de Materias</u></h2>
-
-
     <!-- Botón para crear una nueva ciudad -->
     <div class="mb-3">
         <a href="@Url.Action("AgregarMateria", "Materia")" class="btn btn-success">Agregar una Nueva Materia</a>
-
     </div>
-
     <div class="table-responsive">
-        <table class="table table-bordered table-striped centrar-contenido">
+        <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>
-                        Codigo de Materia
-                    </th>
-                    <th>
-                        Correlativas
-                    </th>
-                    <th>
-                        Nombre de la Materia
-                    </th>
-                    <th>
-                        Ciclo
-                    </th>
-                    <th>
-                        Carrera
-                    </th>
-                    <th>
-                        Funciones
-                    </th>
+                    <th class="text-center">Código de Materia</th>
+                    <th class="text-center">Correlativas</th>
+                    <th class="text-center">Nombre de la Materia</th>
+                    <th class="text-center">Ciclo</th>
+                    <th class="text-center">Carrera</th>
+                    <th class="text-center">Funciones</th>
                 </tr>
             </thead>
             <tbody>
-
-                @foreach (var item in Model)
+                @foreach (var elemento in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.codigoMateria)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.correlativas)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nombreMateria)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CICLO.nombreCiclo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CARRERA.nombreCarrera)
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarMateria", "Materia", new { idMateria = item.idMateria })'">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger mr-2" onclick="location.href='@Url.Action("EliminarMateria", "Materia", new { idMateria = item.idMateria })'">
-                                Eliminar
-                            </button>
+                        <td class="text-center">@Html.DisplayFor(modelItem => elemento.codigoMateria)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => elemento.correlativas)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => elemento.nombreMateria)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => elemento.CICLO.nombreCiclo)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => elemento.CARRERA.nombreCarrera)</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarMateria", "Materia", new { idMateria = elemento.idMateria })'">Editar</button>
+                            <button type="button" class="btn btn-danger mr-2" onclick="location.href='@Url.Action("EliminarMateria", "Materia", new { idMateria = elemento.idMateria })'">Eliminar</button>
                         </td>
                     </tr>
                 }
@@ -85,32 +53,3 @@
         </table>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

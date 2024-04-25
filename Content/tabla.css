@@ -1,28 +1,25 @@
-﻿/* styles.css */
-
-body {
-    background-color: #f8f9fa;
-}
-/*
-.container {
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    border-radius: 10px;
-}*/
-
-.table thead th {
-    background-color: #343a40;
-    color: #ffffff;
-    border-color: #454d55;
+﻿/* Estilos para la tabla */
+.table {
+    table-layout: auto; /* Ajusta el ancho de las celdas automáticamente */
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
 }
 
-.table tbody td {
-    background-color: #f8f9fa;
-    border-color: #000000; /* Agrega este estilo para el color del borde de las celdas */
-    
-}
-.centrar-contenido {
-    text-align: center;
-    vertical-align: middle;
-}
+    /* Estilos para los encabezados de columna */
+    .table thead th {
+        background-color: #343a40;
+        color: #ffffff;
+        border-color: #454d55;
+        max-width: 200px; /* Ancho máximo para los encabezados de columna */
+        white-space: nowrap; /* Evita que el texto se envuelva */
+        overflow: hidden; /* Oculta el texto que desborda */
+        text-overflow: ellipsis; /* Muestra puntos suspensivos (...) si el texto es demasiado largo */
+    }
+
+
+        /* Estilos para las celdas del cuerpo de la tabla */
+        .table tbody td:nth-child(5) {
+            max-width: 200px; /* Ancho máximo para las celdas de la columna de la carrera */
+            text-overflow: clip; /* No mostrar puntos suspensivos */
+        }
+
+

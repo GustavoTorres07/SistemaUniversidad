@@ -5,43 +5,76 @@
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<style>
+    /* Cambia el color del encabezado "Agregar una Nueva Materia" */
+    .card-header.custom-header {
+        background-color: #3AA4F0; /* Cambia el color a azul, puedes ajustarlo según tu preferencia */
+    }
+</style>
 
-    <div class="form-horizontal">
-        <h4>Agregar Materia</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header custom-header text-white text-center">
+                    <h4 class="mb-0">Agregar una Nueva Materia</h4>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ciclo_id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.ciclo_id, ViewBag.Ciclos as SelectList, "Seleccione un ciclo", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ciclo_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.carrera_id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.carrera_id, ViewBag.Carreras as SelectList, "Seleccione una carrera", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.carrera_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- Resto de los campos -->
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Agregar Materia" class="btn btn-primary" />
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.codigoMateria,"Codigo de Materia" , htmlAttributes: new { @class = "col-md-4 col-form-label text-md-right" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.codigoMateria, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese el código de la materia" } })
+                                @Html.ValidationMessageFor(model => model.codigoMateria, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.correlativas,"Correlativas", htmlAttributes: new { @class = "col-md-4 col-form-label text-md-right" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.correlativas, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese la correlativa de la materia" } })
+                                @Html.ValidationMessageFor(model => model.correlativas, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.nombreMateria,"Nombre de la Materia", htmlAttributes: new { @class = "col-md-4 col-form-label text-md-right" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.nombreMateria, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingrese el nombre de la materia" } })
+                                @Html.ValidationMessageFor(model => model.nombreMateria, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.ciclo_id,"Ciclo de la Materia", htmlAttributes: new { @class = "col-md-4 col-form-label text-md-right" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(model => model.ciclo_id, ViewBag.Ciclos as SelectList, "Seleccione un ciclo", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ciclo_id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.carrera_id,"Carrera de la Materia", htmlAttributes: new { @class = "col-md-4 col-form-label text-md-right" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(model => model.carrera_id, ViewBag.Carreras as SelectList, "Seleccione una carrera", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.carrera_id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group row">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                                <a href="@Url.Action("Index")" class="btn btn-danger ml-2">Cancelar</a>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Regresar a la Lista", "Index")
 </div>
 
 @section Scripts {

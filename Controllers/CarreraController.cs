@@ -99,33 +99,39 @@ namespace SistemaUniversidad.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    // Si el modelo no es válido, devolver la vista con errores
+                    // If the model is not valid, return the view with errors
                     return View(carrera);
                 }
 
                 using (var db = new UniversidadContext())
                 {
-                    // Buscar la ciudad a editar en la base de datos
+                    // Check if the new career name already exists in the database
+                    if (db.CARRERA.Any(c => c.nombreCarrera == carrera.nombreCarrera && c.idCarrera != carrera.idCarrera))
+                    {
+                        ModelState.AddModelError("nombreCarrera", "Ya existe una carrera con este nombre.");
+                        return View(carrera);
+                    }
+
+                    // Find the original career to edit in the database
                     var carreraOriginal = db.CARRERA.Find(carrera.idCarrera);
 
-                    // Actualizar los datos de la ciudad
+                    // Update the career data
                     carreraOriginal.nombreCarrera = carrera.nombreCarrera;
                     carreraOriginal.cantidadCiclo = carrera.cantidadCiclo;
 
-                    // Guardar los cambios en la base de datos
+                    // Save changes to the database
                     db.SaveChanges();
 
-                    // Redirigir al índice después de la edición exitosa
+                    // Redirect to the index after successful editing
                     return RedirectToAction("Index");
                 }
             }
             catch (Exception)
             {
-                // Manejar la excepción
+                // Handle the exception
                 throw;
             }
         }
-
         public ActionResult EliminarCarrera(int idCarrera)
         {
             try

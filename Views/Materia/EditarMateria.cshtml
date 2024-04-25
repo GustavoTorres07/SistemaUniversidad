@@ -1,0 +1,118 @@
+﻿@model SistemaUniversidad.Models.MATERIA
+
+@{
+    ViewBag.Title = "Editar Materia";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<style>
+    /* Estilo para aumentar el tamaño de la fuente del nombre de la materia */
+    .nombre-materia {
+        font-size: 18px; /* Ajusta el tamaño según prefieras */
+    }
+
+    /* Cambia el color del encabezado "Editar Materia" */
+    .custom-header {
+        background-color: #3AA4F0; /* Cambia el color según tu preferencia */
+    }
+
+    /* Estilo para los botones */
+    .btn-success, .btn-danger {
+        margin-right: 10px; /* Espacio entre los botones */
+    }
+    .custom-dropdown {
+        width: 300px; /* o el ancho deseado */
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header custom-header text-white text-center">
+                        <h4 class="mb-0">Editar Materia</h4>
+                    </div>
+                    <div class="card-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                        <!-- Código de Materia -->
+                        <div class="form-group row">
+                            <label for="codigoMateria" class="col-md-3 col-form-label text-md-right">Código de la Materia</label>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.codigoMateria, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.codigoMateria, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Correlativas -->
+                        <div class="form-group row">
+                            <label for="codigoMateria" class="col-md-3 col-form-label text-md-right">Correlativas</label>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.correlativas, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.correlativas, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Nombre de la Materia -->
+                        <div class="form-group row">
+                            <label for="codigoMateria" class="col-md-3 col-form-label text-md-right">Nombre de la Materia</label>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.nombreMateria, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.nombreMateria, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Ciclo -->
+                        <div class="form-group row">
+                            <label for="ciclo_id" class="col-md-3 col-form-label text-md-right">Ciclo de la Materia</label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("ciclo_id", new SelectList(ViewBag.ciclos, "Value", "Text"), "Seleccione un ciclo", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Carrera -->
+                        @*<div class="form-group row">
+                            <label for="carrera_id" class="col-md-3 col-form-label text-md-right">Carrera</label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("carrera_id", new SelectList(ViewBag.Carreras, "Value", "Text"), "Seleccione una carrera", new { @class = "form-control custom-dropdown", style = "width: 100%;" })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group row">
+                        <label for="carrera_id" class="col-md-3 col-form-label text-md-right">Carrera</label>
+                        <div class="col-md-9">
+                            @Html.DropDownList("carrera_id", new SelectList(ViewBag.Carreras, "Value", "Text"), "Seleccione una carrera", new { @class = "form-control custom-dropdown", style = "width: 300px;" })
+                        </div>
+                    </div>
+
+                        <!-- Otros campos del formulario -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-group row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <!-- Botones para guardar o cancelar -->
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <a href="@Url.Action("Index")" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

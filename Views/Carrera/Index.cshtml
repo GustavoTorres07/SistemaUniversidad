@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,11 +19,9 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4"><u>Lista de Carreras</u></h2>
 
-
     <!-- Botón para crear una nueva carrera -->
     <div class="mb-3">
         <a href="@Url.Action("AgregarCarrera", "Carrera")" class="btn btn-success">Crear Nueva Carrera</a>
-
     </div>
 
     <div class="table-responsive">
@@ -41,11 +38,10 @@
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td class="long-content">
                             @Html.DisplayFor(modelItem => item.nombreCarrera)
                         </td>
                         <td>
@@ -65,32 +61,3 @@
         </table>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -23,9 +23,9 @@ namespace SistemaUniversidad.Models
         }
     
         public int idMateria { get; set; }
+        public string nombreMateria { get; set; }
         public int ciclo_id { get; set; }
         public int carrera_id { get; set; }
-        public string nombreMateria { get; set; }
         public Nullable<int> codigoMateria { get; set; }
         public string correlativas { get; set; }
     

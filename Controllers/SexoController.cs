@@ -91,7 +91,6 @@ namespace SistemaUniversidad.Controllers
                 throw;
             }
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditarSexo(SEXO sexo)
@@ -100,28 +99,35 @@ namespace SistemaUniversidad.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    // Si el modelo no es válido, devolver la vista con errores
+                    // If the model is not valid, return the view with errors
                     return View(sexo);
                 }
 
                 using (var db = new UniversidadContext())
                 {
-                    // Buscar la ciudad a editar en la base de datos
+                    // Check if the new sex name already exists in the database
+                    if (db.SEXO.Any(s => s.nombreSexo == sexo.nombreSexo && s.idSexo != sexo.idSexo))
+                    {
+                        ModelState.AddModelError("nombreSexo", "Ya existe un sexo con este nombre.");
+                        return View(sexo);
+                    }
+
+                    // Find the original sex to edit in the database
                     var sexoOriginal = db.SEXO.Find(sexo.idSexo);
 
-                    // Actualizar los datos de la ciudad
+                    // Update the sex data
                     sexoOriginal.nombreSexo = sexo.nombreSexo;
 
-                    // Guardar los cambios en la base de datos
+                    // Save changes to the database
                     db.SaveChanges();
 
-                    // Redirigir al índice después de la edición exitosa
+                    // Redirect to the index after successful editing
                     return RedirectToAction("Index");
                 }
             }
             catch (Exception)
             {
-                // Manejar la excepción
+                // Handle the exception
                 throw;
             }
         }
