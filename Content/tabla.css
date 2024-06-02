@@ -2,24 +2,33 @@
 .table {
     table-layout: auto; /* Ajusta el ancho de las celdas automáticamente */
     width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+    border-collapse: collapse; /* Combina los bordes de las celdas adyacentes */
 }
 
     /* Estilos para los encabezados de columna */
     .table thead th {
         background-color: #343a40;
         color: #ffffff;
-        border-color: #454d55;
+        border: 1px solid #454d55;
         max-width: 200px; /* Ancho máximo para los encabezados de columna */
         white-space: nowrap; /* Evita que el texto se envuelva */
         overflow: hidden; /* Oculta el texto que desborda */
         text-overflow: ellipsis; /* Muestra puntos suspensivos (...) si el texto es demasiado largo */
+        text-align: center; /* Centra el contenido horizontalmente */
+        vertical-align: middle; /* Centra el contenido verticalmente */
+        padding: 8px; /* Añade espacio interior */
     }
 
+    /* Estilos para las celdas del cuerpo de la tabla */
+    .table tbody td {
+        border: 1px solid #dddddd;
+        text-align: center; /* Centra el contenido horizontalmente */
+        vertical-align: middle; /* Centra el contenido verticalmente */
+        padding: 8px; /* Añade espacio interior */
+    }
 
-        /* Estilos para las celdas del cuerpo de la tabla */
+        /* Estilos específicos para la quinta columna del cuerpo de la tabla */
         .table tbody td:nth-child(5) {
-            max-width: 200px; /* Ancho máximo para las celdas de la columna de la carrera */
+            max-width: 200px; /* Ancho máximo para las celdas de la quinta columna */
             text-overflow: clip; /* No mostrar puntos suspensivos */
         }
-
-

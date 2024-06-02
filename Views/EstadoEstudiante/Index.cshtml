@@ -1,0 +1,105 @@
+﻿@model IEnumerable<SistemaUniversidad.Models.ESTADOESTUDIANTE>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/tabla.css">
+    <link rel="stylesheet" href="~/Content/BarraMenu.css">
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Tabla de Estados</title>
+</head>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4"><u>Lista de los Estados de Estudiantes</u></h2>
+
+
+    <!-- Botón para crear una nueva ciudad -->
+    <div class="mb-3">
+        <a href="@Url.Action("AgregarEstadoEstudiante", "EstadoEstudiante")" class="btn btn-success">Crear Nuevo Estado</a>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped centrar-contenido">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Nombre del Estado
+                    </th>
+                    <th>
+                        Estado
+                    </th>
+                    <th>Funciones</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombreEstadoEstudiante)
+                        </td>
+
+                        <td>
+                            @if (item.estado)
+                            {
+                                <span class="text-success">Activo</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">Inactivo</span>
+                            }
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarEstadoEstudiante", "EstadoEstudiante", new { idEstadoEstudiante = item.idEstadoEstudiante })'">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-danger mr-2" onclick="location.href='@Url.Action("EliminarEstadoEstudiante", "EstadoEstudiante", new { idEstadoEstudiante = item.idEstadoEstudiante })'">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

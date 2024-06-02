@@ -99,36 +99,32 @@ namespace SistemaUniversidad.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    // If the model is not valid, return the view with errors
+                    
                     return View(carrera);
                 }
 
                 using (var db = new UniversidadContext())
                 {
-                    // Check if the new career name already exists in the database
+                    
                     if (db.CARRERA.Any(c => c.nombreCarrera == carrera.nombreCarrera && c.idCarrera != carrera.idCarrera))
                     {
                         ModelState.AddModelError("nombreCarrera", "Ya existe una carrera con este nombre.");
                         return View(carrera);
                     }
 
-                    // Find the original career to edit in the database
+                   
                     var carreraOriginal = db.CARRERA.Find(carrera.idCarrera);
 
-                    // Update the career data
                     carreraOriginal.nombreCarrera = carrera.nombreCarrera;
                     carreraOriginal.cantidadCiclo = carrera.cantidadCiclo;
 
-                    // Save changes to the database
                     db.SaveChanges();
 
-                    // Redirect to the index after successful editing
                     return RedirectToAction("Index");
                 }
             }
             catch (Exception)
             {
-                // Handle the exception
                 throw;
             }
         }

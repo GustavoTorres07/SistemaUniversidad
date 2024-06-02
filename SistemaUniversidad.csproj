@@ -132,6 +132,7 @@
     <Compile Include="Controllers\CicloController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
     <Compile Include="Controllers\EstadoAuxiliarController.cs" />
+    <Compile Include="Controllers\EstadoEstudianteController.cs" />
     <Compile Include="Controllers\EstadoProfesorController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Models\ESTADOESTUDIANTE.cs">
       <DependentUpon>ModeloUniversidad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EstadoEstudianteCLS.cs" />
     <Compile Include="Models\ESTADOINSCRIPCIONESTUDIANTE.cs">
       <DependentUpon>ModeloUniversidad.tt</DependentUpon>
     </Compile>
@@ -325,6 +327,9 @@
     <Content Include="Views\Materia\Index.cshtml" />
     <Content Include="Views\Materia\AgregarMateria.cshtml" />
     <Content Include="Views\Materia\EditarMateria.cshtml" />
+    <Content Include="Views\EstadoEstudiante\Index.cshtml" />
+    <Content Include="Views\EstadoEstudiante\AgregarEstadoEstudiante.cshtml" />
+    <Content Include="Views\EstadoEstudiante\EditarEstadoEstudiante.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
