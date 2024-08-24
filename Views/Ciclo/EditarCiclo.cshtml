@@ -1,25 +1,17 @@
-﻿@model SistemaUniversidad.Models.CICLO
+﻿@model SistemaUniversidad.Models.cicloCLS
 
 @{
-    ViewBag.Title = "AgregarCiudad";
+    ViewBag.Title = "Editar Ciclo";
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
 
 <style>
-    /* Agrega un estilo personalizado para aumentar el tamaño de la fuente del nombre de la ciudad */
     .nombre-ciudad {
-        font-size: 18px; /* Puedes ajustar el tamaño según tus preferencias */
-        /* Otros estilos si es necesario */
-    }
-    /* Agrega un estilo personalizado para aumentar el tamaño de la fuente del nombre de la ciudad */
-    .nombre-ciudad {
-        font-size: 18px; /* Puedes ajustar el tamaño según tus preferencias */
-        /* Otros estilos si es necesario */
+        font-size: 18px;
     }
 
-    /* Cambia el color del encabezado "Agregar un Ciclo" */
     .card-header.custom-header {
-        background-color: #3AA4F0; /* Cambia el color a naranja, puedes ajustarlo según tu preferencia */
+        background-color: #3AA4F0;
     }
 </style>
 
@@ -35,19 +27,19 @@
                     {
                         @Html.AntiForgeryToken()
 
-                        @*<div class="form-group row">
-                            @Html.LabelFor(model => model.nombreCiclo, htmlAttributes: new { @class = "col-md-4 col-form-label text-md-right" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.nombreCiclo, new { htmlAttributes = new { @class = "form-control .nombre-ciudad" } })
-                                @Html.ValidationMessageFor(model => model.nombreCiclo, "", new { @class = "text-danger" })
-                            </div>
-                        </div>*@
-
                         <div class="form-group row">
                             <label for="nombreCiclo" class="col-md-4 col-form-label text-md-right">Nombre del Ciclo</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.nombreCiclo, new { htmlAttributes = new { @class = "form-control .nombre-ciudad" } })
+                                @Html.EditorFor(model => model.nombreCiclo, new { htmlAttributes = new { @class = "form-control nombre-ciudad" } })
                                 @Html.ValidationMessageFor(model => model.nombreCiclo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="carrera_id" class="col-md-4 col-form-label text-md-right">Carrera</label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("carrera_id", (SelectList)ViewBag.Carreras, "Seleccione una carrera", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.carrera_id, "", new { @class = "text-danger" })
                             </div>
                         </div>
 

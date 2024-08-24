@@ -1,0 +1,145 @@
+﻿@model IEnumerable<SistemaUniversidad.Models.ESTUDIANTE>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/tabla.css">
+    <link rel="stylesheet" href="~/Content/BarraMenu.css">
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Tabla de Estudiantes</title>
+</head>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4"><u>Lista de Estudiantes</u></h2>
+
+    <div class="mb-3">
+        <a href="@Url.Action("AgregarEstudiante", "Estudiante")" class="btn btn-success">Crear Nuevo Estudiante</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="bg-dark">
+                <tr>
+                    <th class="text-center nowrap">Numero de Legajo</th>
+                    <th class="text-center nowrap">Nombre</th>
+                    <th class="text-center nowrap">Apellido</th>
+                    <th class="text-center nowrap">Edad</th>
+                    <th class="text-center nowrap">DNI</th>
+                    <th class="text-center nowrap">Ciudad</th>
+                    <th class="text-center nowrap">Sexo</th>
+                    <th class="text-center nowrap">Estado</th>
+                    <th class="text-center nowrap">Correo Electrónico</th>
+                    <th class="text-center nowrap">Fecha Nacimiento</th>
+                    <th class="text-center nowrap">Carrera</th>
+                    <th class="text-center nowrap">Fecha Registro</th>
+                    <th class="text-center nowrap">Activo?</th>
+                    <th class="text-center nowrap">Funciones</th>
+                    <th class="text-center nowrap">Inscribir a Materias</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center codigo-estudiante nowrap">@Html.DisplayFor(modelItem => item.numeroLegajo)</td>
+                        <td class="text-center nombre nowrap">@Html.DisplayFor(modelItem => item.nombreEstudiante)</td>
+                        <td class="text-center apellido nowrap">@Html.DisplayFor(modelItem => item.apellidoEstudiante)</td>
+                        <td class="text-center edad nowrap">@Html.DisplayFor(modelItem => item.edadEstudiante)</td>
+                        <td class="text-center dni nowrap">@Html.DisplayFor(modelItem => item.dniEstudiante)</td>
+                        <td class="text-center ciudad nowrap">@Html.DisplayFor(modelItem => item.CIUDAD.nombreCiudad)</td>
+                        <td class="text-center sexo nowrap">@Html.DisplayFor(modelItem => item.SEXO.nombreSexo)</td>
+                        <td class="text-center estado nowrap">@Html.DisplayFor(modelItem => item.ESTADOESTUDIANTE.nombreEstadoEstudiante)</td>
+                        <td class="text-center correo nowrap">@Html.DisplayFor(modelItem => item.correoElectronico)</td>
+                        <td class="text-center fecha-nacimiento nowrap">@item.fechaNacimientoEstudiante.ToString("dd-MM-yyyy")</td>
+                        <td class="text-center carrera nowrap">@Html.DisplayFor(modelItem => item.CARRERA.nombreCarrera)</td>
+                        <td class="text-center fecha-registro nowrap">@item.fechaRegistroEstudiante.ToString("dd-MM-yyyy")</td>
+                        <td class="text-center activo nowrap">@Html.DisplayFor(modelItem => item.activo)</td>
+
+                        <td class="text-center nowrap">
+                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarEstudiante", "Estudiante", new { idEstudiante = item.idEstudiante })'">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarEstudianteModal" data-estudianteid="@item.idEstudiante" data-estudiantenumerolegajo="@item.numeroLegajo">
+                                Eliminar
+                            </button>
+                        </td>
+                        <td class="text-center nowrap">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inscripcionModal" data-id="@item.idEstudiante">
+                                Inscribir a Materias
+                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inscripcionModal" data-id="@item.idEstudiante">
+                                ver PDF
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal para eliminar estudiante -->
+<div class="modal fade" id="eliminarEstudianteModal" tabindex="-1" aria-labelledby="eliminarEstudianteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarEstudianteModalLabel">Eliminar Estudiante</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea eliminar el Estudiante con el Número de Legajo <strong id="estudianteNumeroLegajo"></strong>?
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("EliminarEstudiante", "Estudiante", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="idEstudiante" id="estudianteId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para inscripción de materias -->
+<div class="modal fade" id="inscripcionModal" tabindex="-1" aria-labelledby="inscripcionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inscripcionModalLabel">Inscripción a Materias</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí cargaremos la vista parcial con las materias -->
+                <div id="modal-body-content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarInscripcion">Guardar Inscripción</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $('#eliminarEstudianteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que abrió el modal
+            var estudianteId = button.data('estudianteid'); // Extraer la información de los atributos data-*
+            var estudianteNumeroLegajo = button.data('estudiantenumerolegajo'); // Extraer la información de los atributos data-*
+
+            var modal = $(this);
+            modal.find('.modal-body #estudianteNumeroLegajo').text(estudianteNumeroLegajo);
+            modal.find('.modal-footer #estudianteId').val(estudianteId);
+        });
+
+    </script>
+}

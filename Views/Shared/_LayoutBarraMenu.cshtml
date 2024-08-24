@@ -7,15 +7,15 @@
     <title>@ViewBag.Title - SistemaUniversidad v1.0</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
     <script src="https://kit.fontawesome.com/f3915ed26b.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="~/Content/BarraMenu.css">
+    <link rel="stylesheet" href="~/Content/BarraMenu.css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @RenderSection("Styles", required: false)
 </head>
-
 <body>
-
     <nav>
         <ul>
             <li>
@@ -31,24 +31,23 @@
                         <a href="#">Estados</a>
                         <ul>
                             <li><a href="~/EstadoEstudiante/Index">de Estudiante</a></li>
-                            <li><a href="~/EstadoProfesor/Index">de Profesor</a></li>
-                            <li><a href="~/EstadoAuxiliar/Index">de Auxiliar</a></li>
+                            <li><a href="~/EstadoUsuario/Index">de Usuario</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Estudiantes</a></li>
+                    <li><a href="~/Estudiante/Index">Estudiantes</a></li>
                     <li><a href="~/Ciudad/Index">Ciudades</a></li>
                     <li><a href="~/Ciclo/Index">Ciclos de Carreras</a></li>
                     <li><a href="~/Materia/Index">Materias</a></li>
                     <li><a href="~/Carrera/Index">Carreras</a></li>
-                    <li><a href="#">Plan de Estudio</a></li>
+                    <li><a href="~/PlanEstudio/Index">Plan de Estudio</a></li>
                     <li><a href="~/Sexo/Index">Sexo</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#">Inscripciones</a>
                 <ul>
-                    <li><a href="#">Estudiante a Carrera</a></li>
                     <li><a href="#">Profesor a Materia</a></li>
+                    <li><a href="~/InscripcionEstudianteMateria/Index">Estudiante a Materia</a></li>
                 </ul>
             </li>
             <li>
@@ -58,17 +57,16 @@
                     <li><a href="#">Auxiliares</a></li>
                 </ul>
             </li>
-            <li><a href="#">Gestion de Estudiantes(PROFESOR)</a></li>
+            <li><a href="~/Usuario/Index">Registro de Usuarios</a></li>
+            <li><a href="~/Rol/Index">Gestion de Roles</a></li>
             <li><a href="#">Ayuda</a></li>
-            <li><a href="#">Cerrar Sesion</a></li>
+            <li><a href="@Url.Action("Login", "Acceso")">Cerrar Sesión</a></li>
+
         </ul>
     </nav>
 
     <div class="container body-content">
-
         @RenderBody()
-
-
     </div>
 
     <footer class="footer">
@@ -78,9 +76,8 @@
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
-

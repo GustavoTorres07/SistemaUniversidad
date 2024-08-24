@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SistemaUniversidad.Models.ESTADOUSUARIO>
+
+@{
+    ViewBag.Title = "Lista de Estados de Usuarios";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/tabla.css">
+    <link rel="stylesheet" href="~/Content/BarraMenu.css">
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Lista de Estados de Usuarios</title>
+</head>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4"><u>Lista de los Estados de Usuarios</u></h2>
+
+    <!-- Botón para crear un nuevo estado -->
+    <div class="mb-3">
+        <a href="@Url.Action("AgregarEstadoUsuario", "EstadoUsuario")" class="btn btn-success">Crear Nuevo Estado Usuario</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="bg-dark text-light">
+                <tr>
+                    <th class="text-center">Nombre del Estado</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Funciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.nombreEstadoUsuario)</td>
+                        <td class="text-center">
+                            @if (item.activo)
+                            {
+                                <span class="badge bg-success">Disponible</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">No Disponible</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info me-2" onclick="location.href='@Url.Action("EditarEstadoUsuario", "EstadoUsuario", new { idEstadoUsuario = item.idEstadoUsuario })'">Editar</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarEstadoUsuarioModal" data-estadousuarioid="@item.idEstadoUsuario" data-estadousuariombre="@item.nombreEstadoUsuario">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="eliminarEstadoUsuarioModal" tabindex="-1" aria-labelledby="eliminarEstadoUsuarioModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarEstadoUsuarioModalLabel">Eliminar Estado Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea eliminar el Estado Usuario <strong id="estadousuarioNombre"></strong>?
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("EliminarEstadoUsuario", "EstadoUsuario", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="idEstadoUsuario" id="estadousuarioId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $('#eliminarEstadoUsuarioModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var estadousuarioId = button.data('estadousuarioid');
+            var estadousuarioNombre = button.data('estadousuariombre');
+
+            var modal = $(this);
+            modal.find('#estadousuarioNombre').text(estadousuarioNombre);
+            modal.find('#estadousuarioId').val(estadousuarioId);
+        });
+    </script>
+}

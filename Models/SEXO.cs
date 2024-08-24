@@ -17,19 +17,16 @@ namespace SistemaUniversidad.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SEXO()
         {
-            this.AUXILIAR = new HashSet<AUXILIAR>();
             this.ESTUDIANTE = new HashSet<ESTUDIANTE>();
-            this.PROFESOR = new HashSet<PROFESOR>();
+            this.USUARIO = new HashSet<USUARIO>();
         }
     
         public int idSexo { get; set; }
         public string nombreSexo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AUXILIAR> AUXILIAR { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ESTUDIANTE> ESTUDIANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PROFESOR> PROFESOR { get; set; }
+        public virtual ICollection<USUARIO> USUARIO { get; set; }
     }
 }

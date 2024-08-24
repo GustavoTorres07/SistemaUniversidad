@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<SistemaUniversidad.Models.ESTADOESTUDIANTE>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Estados de Estudiantes";
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
-
 
 <head>
     <meta charset="UTF-8">
@@ -14,59 +13,48 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Tabla de Estados</title>
+    <title>Lista de Estados de Estudiantes</title>
 </head>
 
 <div class="container mt-5">
     <h2 class="text-center mb-4"><u>Lista de los Estados de Estudiantes</u></h2>
 
-
-    <!-- Botón para crear una nueva ciudad -->
+    <!-- Botón para crear un nuevo estado -->
     <div class="mb-3">
         <a href="@Url.Action("AgregarEstadoEstudiante", "EstadoEstudiante")" class="btn btn-success">Crear Nuevo Estado</a>
-
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped centrar-contenido">
-            <thead class="thead-dark">
+        <table class="table table-bordered">
+            <thead class="bg-dark text-light">
                 <tr>
-                    <th>
-                        Nombre del Estado
-                    </th>
-                    <th>
-                        Estado
-                    </th>
-                    <th>Funciones</th>
+                    <th class="text-center">Nombre del Estado</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Funciones</th>
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nombreEstadoEstudiante)
-                        </td>
-
-                        <td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.nombreEstadoEstudiante)</td>
+                        <td class="text-center">
                             @if (item.estado)
                             {
-                                <span class="text-success">Activo</span>
+                                <span class="badge bg-success">Disponible</span>
                             }
                             else
                             {
-                                <span class="text-danger">Inactivo</span>
+                                <span class="badge bg-danger">No Disponible</span>
                             }
                         </td>
-
-                        <td>
-                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarEstadoEstudiante", "EstadoEstudiante", new { idEstadoEstudiante = item.idEstadoEstudiante })'">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger mr-2" onclick="location.href='@Url.Action("EliminarEstadoEstudiante", "EstadoEstudiante", new { idEstadoEstudiante = item.idEstadoEstudiante })'">
-                                Eliminar
-                            </button>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info me-2" onclick="location.href='@Url.Action("EditarEstadoEstudiante", "EstadoEstudiante", new { idEstadoEstudiante = item.idEstadoEstudiante })'">Editar</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarEstadoEstudianteModal" data-estadoestudianteid="@item.idEstadoEstudiante" data-estadoestudientenombre="@item.nombreEstadoEstudiante">
+                                    Eliminar
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -75,31 +63,40 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="eliminarEstadoEstudianteModal" tabindex="-1" aria-labelledby="eliminarEstadoEstudianteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarEstadoEstudianteModalLabel">Eliminar Estado Estudiante</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea eliminar el Estado Estudiante <strong id="estadoestudianteNombre"></strong>?
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("EliminarEstadoEstudiante", "EstadoEstudiante", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="idEstadoEstudiante" id="estadoestudianteId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 
+@section scripts {
+    <script>
+        $('#eliminarEstadoEstudianteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var estadoestudianteId = button.data('estadoestudianteid');
+            var estadoestudianteNombre = button.data('estadoestudientenombre');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            var modal = $(this);
+            modal.find('#estadoestudianteNombre').text(estadoestudianteNombre);
+            modal.find('#estadoestudianteId').val(estadoestudianteId);
+        });
+    </script>
+}

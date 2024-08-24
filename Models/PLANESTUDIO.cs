@@ -15,11 +15,14 @@ namespace SistemaUniversidad.Models
     public partial class PLANESTUDIO
     {
         public int idPlanEstudio { get; set; }
+        public string nombrePlanEstudio { get; set; }
+        public System.DateTime fechaCreacion { get; set; }
+        public System.DateTime anioPlanEstudio { get; set; }
+        public string descripcion { get; set; }
+        public Nullable<bool> estadoActivo { get; set; }
         public int carrera_id { get; set; }
         public int ciclo_id { get; set; }
         public int materia_id { get; set; }
-        public Nullable<int> correlativa { get; set; }
-        public Nullable<System.DateTime> anioPlanEstudio { get; set; }
     
         public virtual CARRERA CARRERA { get; set; }
         public virtual CICLO CICLO { get; set; }

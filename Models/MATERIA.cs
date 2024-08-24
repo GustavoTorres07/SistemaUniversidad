@@ -18,7 +18,7 @@ namespace SistemaUniversidad.Models
         public MATERIA()
         {
             this.GESTIONMATERIA = new HashSet<GESTIONMATERIA>();
-            this.INSCRIPCIONESTUDIANTE = new HashSet<INSCRIPCIONESTUDIANTE>();
+            this.INSCRIPCIONESTUDIANTEMATERIA = new HashSet<INSCRIPCIONESTUDIANTEMATERIA>();
             this.PLANESTUDIO = new HashSet<PLANESTUDIO>();
         }
     
@@ -34,7 +34,7 @@ namespace SistemaUniversidad.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GESTIONMATERIA> GESTIONMATERIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<INSCRIPCIONESTUDIANTE> INSCRIPCIONESTUDIANTE { get; set; }
+        public virtual ICollection<INSCRIPCIONESTUDIANTEMATERIA> INSCRIPCIONESTUDIANTEMATERIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PLANESTUDIO> PLANESTUDIO { get; set; }
     }

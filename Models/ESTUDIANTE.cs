@@ -18,11 +18,11 @@ namespace SistemaUniversidad.Models
         public ESTUDIANTE()
         {
             this.GESTIONMATERIA = new HashSet<GESTIONMATERIA>();
-            this.INSCRIPCIONESTUDIANTE = new HashSet<INSCRIPCIONESTUDIANTE>();
+            this.INSCRIPCIONESTUDIANTEMATERIA = new HashSet<INSCRIPCIONESTUDIANTEMATERIA>();
         }
     
         public int idEstudiante { get; set; }
-        public int codigoEstudiante { get; set; }
+        public int numeroLegajo { get; set; }
         public string nombreEstudiante { get; set; }
         public string apellidoEstudiante { get; set; }
         public int edadEstudiante { get; set; }
@@ -33,13 +33,16 @@ namespace SistemaUniversidad.Models
         public string correoElectronico { get; set; }
         public System.DateTime fechaNacimientoEstudiante { get; set; }
         public System.DateTime fechaRegistroEstudiante { get; set; }
+        public int carrera_id { get; set; }
+        public Nullable<bool> activo { get; set; }
     
+        public virtual CARRERA CARRERA { get; set; }
         public virtual CIUDAD CIUDAD { get; set; }
         public virtual ESTADOESTUDIANTE ESTADOESTUDIANTE { get; set; }
         public virtual SEXO SEXO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GESTIONMATERIA> GESTIONMATERIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<INSCRIPCIONESTUDIANTE> INSCRIPCIONESTUDIANTE { get; set; }
+        public virtual ICollection<INSCRIPCIONESTUDIANTEMATERIA> INSCRIPCIONESTUDIANTEMATERIA { get; set; }
     }
 }

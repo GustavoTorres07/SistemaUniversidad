@@ -5,55 +5,43 @@
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="~/Content/tabla.css">
     <link rel="stylesheet" href="~/Content/BarraMenu.css">
-    <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Tabla de Sexos</title>
 </head>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4"><u>Lista de los Sexo</u></h2>
+    <h2 class="text-center mb-4"><u>Lista de Sexos</u></h2>
 
-
-    <!-- Botón para crear una nueva ciudad -->
+    <!-- Botón para crear un nuevo sexo -->
     <div class="mb-3">
         <a href="@Url.Action("AgregarSexo", "Sexo")" class="btn btn-success">Crear Nuevo Sexo</a>
-
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped centrar-contenido">
-            <thead class="thead-dark">
+        <table class="table table-bordered">
+            <thead class="bg-dark">
                 <tr>
-                    <th>
-                        @*@Html.DisplayNameFor(model => model.nombreCiudad)*@
-                        Nombre de Sexo
-                    </th>
-                    <th>Funciones</th>
+                    <th class="text-center">Nombre de Sexo</th>
+                    <th class="text-center">Funciones</th>
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (var item in Model)
                 {
                     <tr>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => item.idCiudad)
-                            </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nombreSexo)
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarSexo", "Sexo", new { idSexo = item.idSexo })'">
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.nombreSexo)</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("EditarSexo", "Sexo", new { idSexo = item.idSexo })'">
                                 Editar
                             </button>
-                            <button type="button" class="btn btn-danger mr-2" onclick="location.href='@Url.Action("EliminarSexo", "Sexo", new { idSexo = item.idSexo })'">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarSexoModal" data-sexoid="@item.idSexo" data-sexonombre="@item.nombreSexo">
                                 Eliminar
                             </button>
                         </td>
@@ -64,31 +52,39 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="eliminarSexoModal" tabindex="-1" aria-labelledby="eliminarSexoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarSexoModalLabel">Eliminar Sexo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea eliminar el Sexo <strong id="sexoNombre"></strong>?
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("EliminarSexo", "Sexo", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="idSexo" id="sexoId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $('#eliminarSexoModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que abrió el modal
+            var sexoId = button.data('sexoid'); // Extraer la información de los atributos data-*
+            var sexoNombre = button.data('sexonombre'); // Extraer la información de los atributos data-*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            var modal = $(this);
+            modal.find('.modal-body #sexoNombre').text(sexoNombre);
+            modal.find('.modal-footer #sexoId').val(sexoId);
+        });
+    </script>
+}

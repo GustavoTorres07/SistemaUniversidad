@@ -93,7 +93,7 @@ namespace SistemaUniversidad.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditarCarrera(CARRERA carrera)
+        public ActionResult EditarCarrera(carreraCLS carrera)
         {
             try
             {

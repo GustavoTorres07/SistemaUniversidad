@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SistemaUniversidad.Models.CARRERA>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Carreras";
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
 
@@ -13,7 +13,7 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Tabla de Carrera</title>
+    <title>Lista de Carreras</title>
 </head>
 
 <div class="container mt-5">
@@ -25,35 +25,27 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped centrar-contenido">
-            <thead class="thead-dark">
+        <table class="table table-bordered">
+            <thead class="bg-dark">
                 <tr>
-                    <th>
-                        Nombre de Carrera
-                    </th>
-                    <th>
-                        Cantidad de Ciclos
-                    </th>
-                    <th>Funciones</th>
+                    <th class="text-center">Nombre de Carrera</th>
+                    <th class="text-center">Cantidad de Ciclos</th>
+                    <th class="text-center">Funciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="long-content">
-                            @Html.DisplayFor(modelItem => item.nombreCarrera)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.cantidadCiclo)
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarCarrera", "Carrera", new { idCarrera = item.idCarrera })'">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger mr-2" onclick="location.href='@Url.Action("EliminarCarrera", "Carrera", new { idCarrera = item.idCarrera })'">
-                                Eliminar
-                            </button>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.nombreCarrera)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.cantidadCiclo)</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info me-2" onclick="location.href='@Url.Action("EditarCarrera", "Carrera", new { idCarrera = item.idCarrera })'">Editar</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarCarreraModal" data-carreraid="@item.idCarrera" data-carreranombre="@item.nombreCarrera">
+                                    Eliminar
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -61,3 +53,40 @@
         </table>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="eliminarCarreraModal" tabindex="-1" aria-labelledby="eliminarCarreraModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarCarreraModalLabel">Eliminar Carrera</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea eliminar la Carrea <strong id="carreraNombre"></strong>?
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("EliminarCarrera", "Carrera", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="idCarrera" id="carreraId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $('#eliminarCarreraModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que abrió el modal
+            var carreraId = button.data('carreraid'); // Extraer la información de los atributos data-*
+            var carreraNombre = button.data('carreranombre'); // Extraer la información de los atributos data-*
+
+            var modal = $(this);
+            modal.find('.modal-body #carreraNombre').text(carreraNombre);
+            modal.find('.modal-footer #carreraId').val(carreraId);
+        });
+    </script>
+}

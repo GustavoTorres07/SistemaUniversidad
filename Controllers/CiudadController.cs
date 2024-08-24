@@ -18,6 +18,7 @@ namespace SistemaUniversidad.Controllers
         private UniversidadContext db = new UniversidadContext();
 
         // Método para manejar la petición GET de la vista Index
+        [Authorize]
         public ActionResult Index()
         {
             // Retornar la vista Index con la lista de todas las ciudades en la base de datos
@@ -103,7 +104,7 @@ namespace SistemaUniversidad.Controllers
         // Método para manejar la petición POST de la vista para editar una ciudad
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditarCiudad(CIUDAD ciudad)
+        public ActionResult EditarCiudad(ciudadCLS ciudad)
         {
             try
             {

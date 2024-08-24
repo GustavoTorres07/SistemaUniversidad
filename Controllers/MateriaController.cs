@@ -1,44 +1,42 @@
-﻿using SistemaUniversidad.Models; // Importa el espacio de nombres para acceder a los modelos del sistema.
-using System; // Importa el espacio de nombres del sistema para tipos fundamentales y primitivos.
-using System.Collections.Generic; // Importa el espacio de nombres para trabajar con colecciones genéricas.
-using System.Linq; // Importa el espacio de nombres para utilizar consultas LINQ.
-using System.Web; // Importa el espacio de nombres para funcionalidades web.
-using System.Web.Mvc; // Importa el espacio de nombres para trabajar con MVC en ASP.NET.
+﻿using SistemaUniversidad.Models;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
-namespace SistemaUniversidad.Controllers // Define el espacio de nombres y el ámbito del controlador.
+namespace SistemaUniversidad.Controllers
 {
-    public class MateriaController : Controller // Define la clase del controlador que hereda de Controller.
+    public class MateriaController : Controller
     {
-        private UniversidadContext db = new UniversidadContext(); // Crea una instancia del contexto de la base de datos de la universidad.
+        private UniversidadContext db = new UniversidadContext();
 
         // GET: Materia
-        public ActionResult Index() // Define la acción para mostrar el índice de materias.
+        public ActionResult Index()
         {
             // Prepara los datos necesarios para la vista.
-            ViewBag.Ciclos = new SelectList(db.CICLO.ToList(), "idCiclo", "nombreCiclo");
-            ViewBag.Carreras = new SelectList(db.CARRERA.ToList(), "idCarrera", "nombreCarrera");
+            ViewBag.Ciclos = new SelectList(db.CICLO, "idCiclo", "nombreCiclo");
+            ViewBag.Carreras = new SelectList(db.CARRERA, "idCarrera", "nombreCarrera");
 
             // Obtiene la lista de todas las materias y muestra la vista correspondiente.
             var materias = db.MATERIA.ToList();
             return View(materias);
         }
 
+        // GET: AgregarMateria
         [HttpGet]
-        public ActionResult AgregarMateria() // Define la acción para mostrar el formulario de agregar materia.
+        public ActionResult AgregarMateria()
         {
             // Prepara los datos necesarios para la vista.
-            ViewBag.Ciclos = new SelectList(db.CICLO.ToList(), "idCiclo", "nombreCiclo");
-            ViewBag.Carreras = new SelectList(db.CARRERA.ToList(), "idCarrera", "nombreCarrera");
+            ViewBag.Ciclos = new SelectList(db.CICLO, "idCiclo", "nombreCiclo");
+            ViewBag.Carreras = new SelectList(db.CARRERA, "idCarrera", "nombreCarrera");
 
-            // Muestra el formulario para agregar una nueva materia.
             return View();
         }
 
+        // POST: AgregarMateria
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AgregarMateria(materiaCLS materia) // Define la acción para agregar una nueva materia.
+        public ActionResult AgregarMateria(materiaCLS materia)
         {
-            // Verifica si el modelo es válido.
             if (ModelState.IsValid)
             {
                 try
@@ -47,162 +45,133 @@ namespace SistemaUniversidad.Controllers // Define el espacio de nombres y el á
                     if (db.MATERIA.Any(m => m.codigoMateria == materia.codigoMateria && m.carrera_id == materia.carrera_id))
                     {
                         ModelState.AddModelError("codigoMateria", "Ya existe una materia con este código en esta carrera.");
-                        ViewBag.Ciclos = new SelectList(db.CICLO.ToList(), "idCiclo", "nombreCiclo");
-                        ViewBag.Carreras = new SelectList(db.CARRERA.ToList(), "idCarrera", "nombreCarrera");
-                        return View(materia);
                     }
-
                     // Verifica si ya existe una materia con el mismo nombre, ciclo y carrera.
-                    if (db.MATERIA.Any(m => m.nombreMateria == materia.nombreMateria && m.ciclo_id == materia.ciclo_id && m.carrera_id == materia.carrera_id))
+                    else if (db.MATERIA.Any(m => m.nombreMateria == materia.nombreMateria && m.ciclo_id == materia.ciclo_id && m.carrera_id == materia.carrera_id))
                     {
                         ModelState.AddModelError("nombreMateria", "Ya existe una materia con este nombre y ciclo en esta carrera.");
-                        ViewBag.Ciclos = new SelectList(db.CICLO.ToList(), "idCiclo", "nombreCiclo");
-                        ViewBag.Carreras = new SelectList(db.CARRERA.ToList(), "idCarrera", "nombreCarrera");
-                        return View(materia);
                     }
-
-                    // Crea una nueva instancia de materia y la agrega a la base de datos.
-                    MATERIA nuevaMateria = new MATERIA()
+                    else
                     {
-                        nombreMateria = materia.nombreMateria,
-                        ciclo_id = materia.ciclo_id,
-                        carrera_id = materia.carrera_id,
-                        codigoMateria = materia.codigoMateria,
-                        correlativas = materia.correlativas,
-                    };
-                    db.MATERIA.Add(nuevaMateria);
-                    db.SaveChanges();
+                        // Crea y agrega la nueva materia.
+                        var nuevaMateria = new MATERIA
+                        {
+                            nombreMateria = materia.nombreMateria,
+                            ciclo_id = materia.ciclo_id,
+                            carrera_id = materia.carrera_id,
+                            codigoMateria = materia.codigoMateria,
+                            correlativas = materia.correlativas,
+                        };
+                        db.MATERIA.Add(nuevaMateria);
+                        db.SaveChanges();
 
-                    // Redirige al índice de materias.
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    // En caso de error, muestra un mensaje de error y vuelve al formulario.
-                    ModelState.AddModelError("", "Error al agregar la Materia: " + ex.Message);
-                    ViewBag.Ciclos = new SelectList(db.CICLO.ToList(), "idCiclo", "nombreCiclo");
-                    ViewBag.Carreras = new SelectList(db.CARRERA.ToList(), "idCarrera", "nombreCarrera");
-                    return View(materia);
+                    ModelState.AddModelError("", "Error al agregar la materia: " + ex.Message);
                 }
             }
 
-            // En caso de modelo no válido, vuelve al formulario con los datos necesarios.
-            ViewBag.Ciclos = new SelectList(db.CICLO.ToList(), "idCiclo", "nombreCiclo");
-            ViewBag.Carreras = new SelectList(db.CARRERA.ToList(), "idCarrera", "nombreCarrera");
+            // Si hay errores, rellenar ViewBag y devolver la vista.
+            ViewBag.Ciclos = new SelectList(db.CICLO, "idCiclo", "nombreCiclo", materia.ciclo_id);
+            ViewBag.Carreras = new SelectList(db.CARRERA, "idCarrera", "nombreCarrera", materia.carrera_id);
             return View(materia);
         }
 
-        // Define la acción para editar una materia.
+        // GET: EditarMateria
+        [HttpGet]
         public ActionResult EditarMateria(int idMateria)
         {
             try
             {
-                // Intenta cargar la materia desde la base de datos.
-                using (var db = new UniversidadContext())
+                var materia = db.MATERIA.Find(idMateria);
+                if (materia == null)
                 {
-                    var materia = db.MATERIA.Find(idMateria);
-                    if (materia == null)
-                    {
-                        // Si la materia no existe, redirige al índice de materias.
-                        return RedirectToAction("Index");
-                    }
-
-                    // Obtiene información adicional necesaria para la vista.
-                    var nombreCarrera = db.CARRERA.Where(c => c.idCarrera == materia.carrera_id).Select(c => c.nombreCarrera).FirstOrDefault();
-                    var ciclos = db.CICLO.Select(c => new SelectListItem { Value = c.idCiclo.ToString(), Text = c.nombreCiclo }).ToList();
-                    ViewBag.Ciclos = ciclos;
-                    ViewBag.NombreCarrera = nombreCarrera;
-                    var carreras = db.CARRERA.Select(c => new SelectListItem { Value = c.idCarrera.ToString(), Text = c.nombreCarrera }).ToList();
-                    ViewBag.Carreras = carreras;
-
-                    // Muestra la vista para editar la materia.
-                    return View(materia);
+                    return HttpNotFound();
                 }
+
+                // Prepara los datos necesarios para la vista.
+                ViewBag.Ciclos = new SelectList(db.CICLO, "idCiclo", "nombreCiclo", materia.ciclo_id);
+                ViewBag.Carreras = new SelectList(db.CARRERA, "idCarrera", "nombreCarrera", materia.carrera_id);
+
+                return View(materia);
             }
             catch (Exception)
             {
-                // En caso de error, muestra un mensaje de error y redirige al índice de materias.
                 ModelState.AddModelError("", "Ocurrió un error al cargar la materia. Por favor, inténtelo de nuevo.");
                 return RedirectToAction("Index");
             }
         }
 
+        // POST: EditarMateria
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditarMateria(MATERIA materia) // Define la acción para guardar los cambios en una materia editada.
+        public ActionResult EditarMateria(MATERIA materia)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
+                try
                 {
-                    // Si el modelo no es válido, vuelve al formulario de edición.
-                    return View(materia);
-                }
-
-                using (var db = new UniversidadContext())
-                {
-                    // Obtiene la materia original desde la base de datos.
                     var materiaOriginal = db.MATERIA.Find(materia.idMateria);
+                    if (materiaOriginal == null)
+                    {
+                        return HttpNotFound();
+                    }
 
-                    // Verifica si ya existe una materia con el mismo nombre.
+                    // Verifica si ya existe una materia con el mismo nombre o código.
                     if (db.MATERIA.Any(m => m.nombreMateria == materia.nombreMateria && m.idMateria != materia.idMateria))
                     {
                         ModelState.AddModelError("nombreMateria", "Ya existe una materia con este nombre.");
-                        return View(materia);
                     }
-
-                    // Verifica si ya existe una materia con el mismo código.
-                    if (db.MATERIA.Any(m => m.codigoMateria == materia.codigoMateria && m.idMateria != materia.idMateria))
+                    else if (db.MATERIA.Any(m => m.codigoMateria == materia.codigoMateria && m.idMateria != materia.idMateria))
                     {
                         ModelState.AddModelError("codigoMateria", "Ya existe otra materia con este código.");
-                        return View(materia);
                     }
+                    else
+                    {
+                        // Actualiza los datos de la materia y guarda los cambios.
+                        materiaOriginal.nombreMateria = materia.nombreMateria;
+                        materiaOriginal.ciclo_id = materia.ciclo_id;
+                        materiaOriginal.carrera_id = materia.carrera_id;
+                        materiaOriginal.codigoMateria = materia.codigoMateria;
+                        materiaOriginal.correlativas = materia.correlativas;
+                        db.SaveChanges();
 
-                    // Actualiza los datos de la materia original con los nuevos datos y guarda los cambios.
-                    materiaOriginal.ciclo_id = materia.ciclo_id;
-                    materiaOriginal.nombreMateria = materia.nombreMateria;
-                    materiaOriginal.carrera_id = materia.carrera_id;
-                    materiaOriginal.codigoMateria = materia.codigoMateria;
-                    materiaOriginal.correlativas = materia.correlativas;
-                    db.SaveChanges();
-
-                    // Redirige al índice de materias.
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Ocurrió un error al actualizar la materia. Por favor, inténtelo de nuevo.");
                 }
             }
-            catch (Exception)
-            {
-                // En caso de error, lanza una excepción.
-                throw;
-            }
+
+            // Si el modelo no es válido, vuelve al formulario de edición.
+            ViewBag.Ciclos = new SelectList(db.CICLO, "idCiclo", "nombreCiclo", materia.ciclo_id);
+            ViewBag.Carreras = new SelectList(db.CARRERA, "idCarrera", "nombreCarrera", materia.carrera_id);
+            return View(materia);
         }
 
-        // Define la acción para eliminar una materia.
+        // GET: EliminarMateria
         public ActionResult EliminarMateria(int idMateria)
         {
             try
             {
-                // Intenta eliminar la materia desde la base de datos.
-                using (UniversidadContext db = new UniversidadContext())
+                var materia = db.MATERIA.Find(idMateria);
+                if (materia == null)
                 {
-                    MATERIA materia = db.MATERIA.Find(idMateria);
-                    if (materia == null)
-                    {
-                        // Si la materia no existe, devuelve un error 404.
-                        return HttpNotFound();
-                    }
-
-                    // Elimina la materia de la base de datos y guarda los cambios.
-                    db.MATERIA.Remove(materia);
-                    db.SaveChanges();
-
-                    // Redirige al índice de materias.
-                    return RedirectToAction("Index");
+                    return HttpNotFound();
                 }
+
+                db.MATERIA.Remove(materia);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // En caso de error, muestra un mensaje de error y redirige al índice de materias.
                 ModelState.AddModelError("", "Error al eliminar la materia: " + ex.Message);
                 return RedirectToAction("Index");
             }

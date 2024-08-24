@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - SistemaUniversidad v1.0</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/Content/Login.css">
+</head>
+<body>
+    <header>
+        <h1 class="site-title">SistemaUniversidad v1.0</h1>
+    </header>
+    <div class="container">
+        <div class="signin-form">
+            <h2>Iniciar Sesión</h2>
+            <form action="/Acceso/Login" method="POST">
+                @Html.AntiForgeryToken() <!-- Campo de verificación antifalsificación -->
+                <div class="input-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="usuarioUsuario" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Clave</label>
+                    <input type="password" id="password" name="claveUsuario" required>
+                </div>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2024 SistemaUniversidad v1.0 - Desarrollado por Gustavo E. Torres - Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

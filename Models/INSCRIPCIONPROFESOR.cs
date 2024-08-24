@@ -15,14 +15,14 @@ namespace SistemaUniversidad.Models
     public partial class INSCRIPCIONPROFESOR
     {
         public int idInscripcionProfesor { get; set; }
-        public int profesor_id { get; set; }
         public int carrera_id { get; set; }
         public int materia_id { get; set; }
         public System.DateTime fechaInscripcionProfesor { get; set; }
         public int estadoInscripcionProfesor_id { get; set; }
+        public int rol_id { get; set; }
     
         public virtual CARRERA CARRERA { get; set; }
         public virtual ESTADOINSCRIPCIONPROFESOR ESTADOINSCRIPCIONPROFESOR { get; set; }
-        public virtual PROFESOR PROFESOR { get; set; }
+        public virtual ROL ROL { get; set; }
     }
 }

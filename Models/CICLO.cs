@@ -17,16 +17,18 @@ namespace SistemaUniversidad.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CICLO()
         {
-            this.INSCRIPCIONESTUDIANTE = new HashSet<INSCRIPCIONESTUDIANTE>();
+            this.INSCRIPCIONESTUDIANTEMATERIA = new HashSet<INSCRIPCIONESTUDIANTEMATERIA>();
             this.MATERIA = new HashSet<MATERIA>();
             this.PLANESTUDIO = new HashSet<PLANESTUDIO>();
         }
     
         public int idCiclo { get; set; }
         public string nombreCiclo { get; set; }
+        public int carrera_id { get; set; }
     
+        public virtual CARRERA CARRERA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<INSCRIPCIONESTUDIANTE> INSCRIPCIONESTUDIANTE { get; set; }
+        public virtual ICollection<INSCRIPCIONESTUDIANTEMATERIA> INSCRIPCIONESTUDIANTEMATERIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MATERIA> MATERIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

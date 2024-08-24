@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<SistemaUniversidad.Models.CICLO>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Listado de Ciclos";
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
-
 
 <head>
     <meta charset="UTF-8">
@@ -14,48 +13,80 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Tabla de Ciudades</title>
+    <title>Lista de Ciclos</title>
 </head>
 
 <div class="container mt-5">
     <h2 class="text-center mb-4"><u>Listado de los Ciclos de las Carreras</u></h2>
 
-
-    <!-- Botón para crear una nueva ciudad -->
+    <!-- Botón para crear un nuevo ciclo -->
     <div class="mb-3">
-        <a href="@Url.Action("AgregarCiclo", "Ciclo")" class="btn btn-success">Crear Nuevo ciclo</a>
-
+        <a href="@Url.Action("AgregarCiclo", "Ciclo")" class="btn btn-success">Crear Nuevo Ciclo</a>
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped centrar-contenido">
-            <thead class="thead-dark">
+        <table class="table table-bordered">
+            <thead class="bg-dark text-white">
                 <tr>
-                    <th>
-                        Nombre del Ciclo
-                    </th>
-                    <th>Funciones</th>
+                    <th class="text-center">Nombre del Ciclo</th>
+                    <th class="text-center">Carrera</th>
+                    <th class="text-center">Funciones</th>
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nombreCiclo)
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarCiclo", "Ciclo", new { idCiclo = item.idCiclo })'">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger mr-2" onclick="location.href='@Url.Action("EliminarCiclo", "Ciclo", new { idCiclo = item.idCiclo })'">
-                                Eliminar
-                            </button>
-                        </td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.nombreCiclo)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.CARRERA.nombreCarrera)</td>
+                        <td class="text-center">
+
+                                <button type="button" class="btn btn-info me-2" onclick="location.href='@Url.Action("EditarCiclo", "Ciclo", new { idCiclo = item.idCiclo })'">Editar</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarCicloModal" data-cicloid="@item.idCiclo" data-ciclonombre="@item.nombreCiclo">
+                                    Eliminar
+                                </button>
+                            </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="eliminarCicloModal" tabindex="-1" aria-labelledby="eliminarCicloModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarCicloModalLabel">Eliminar Ciclo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea eliminar el Ciclo <strong id="cicloNombre"></strong>?
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("EliminarCiclo", "Ciclo", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="idCiclo" id="cicloId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $('#eliminarCicloModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que abrió el modal
+            var cicloId = button.data('cicloid'); // Extraer la información de los atributos data-*
+            var cicloNombre = button.data('ciclonombre'); // Extraer la información de los atributos data-*
+
+            var modal = $(this);
+            modal.find('.modal-body #cicloNombre').text(cicloNombre);
+            modal.find('.modal-footer #cicloId').val(cicloId);
+        });
+    </script>
+}

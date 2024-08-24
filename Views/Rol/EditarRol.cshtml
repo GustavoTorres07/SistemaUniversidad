@@ -1,0 +1,91 @@
+﻿@model SistemaUniversidad.Models.RolCLS
+
+@{
+    ViewBag.Title = "Editar Rol";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<style>
+    /* Estilo para aumentar el tamaño de la fuente del nombre del rol */
+    .nombre-rol {
+        font-size: 18px; /* Ajusta el tamaño según prefieras */
+    }
+
+    /* Cambia el color del encabezado "Editar Rol" */
+    .custom-header {
+        background-color: #3AA4F0; /* Cambia el color según tu preferencia */
+    }
+
+    /* Estilo para los botones */
+    .btn-success, .btn-danger {
+        margin-right: 10px; /* Espacio entre los botones */
+    }
+
+    .custom-dropdown {
+        width: 300px; /* o el ancho deseado */
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header custom-header text-white text-center">
+                        <h4 class="mb-0">Editar Rol</h4>
+                    </div>
+                    <div class="card-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <!-- Nombre del Rol -->
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.nombreRol, htmlAttributes: new { @class = "col-md-3 col-form-label text-md-right" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.nombreRol, new { htmlAttributes = new { @class = "form-control nombre-rol" } })
+                                @Html.ValidationMessageFor(model => model.nombreRol, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Estado del Rol -->
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.estadoRol, htmlAttributes: new { @class = "col-md-3 col-form-label text-md-right" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.estadoRol,
+                                    new SelectList(new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Value = "true", Text = "Disponible" },
+                                        new SelectListItem { Value = "false", Text = "No Disponible" }
+                                    }, "Value", "Text"),
+                                    "Seleccione un estado",
+                                    new { @class = "form-control custom-dropdown" })
+                                @Html.ValidationMessageFor(model => model.estadoRol, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-group row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <!-- Botones para guardar o cancelar -->
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <a href="@Url.Action("Index", "Rol")" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

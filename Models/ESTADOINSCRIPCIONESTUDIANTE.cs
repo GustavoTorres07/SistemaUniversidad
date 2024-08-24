@@ -17,13 +17,13 @@ namespace SistemaUniversidad.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ESTADOINSCRIPCIONESTUDIANTE()
         {
-            this.INSCRIPCIONESTUDIANTE = new HashSet<INSCRIPCIONESTUDIANTE>();
+            this.INSCRIPCIONESTUDIANTEMATERIA = new HashSet<INSCRIPCIONESTUDIANTEMATERIA>();
         }
     
         public int idEstadoInscripcionEstudiante { get; set; }
         public string nombreEstadoInscripcionEstudiante { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<INSCRIPCIONESTUDIANTE> INSCRIPCIONESTUDIANTE { get; set; }
+        public virtual ICollection<INSCRIPCIONESTUDIANTEMATERIA> INSCRIPCIONESTUDIANTEMATERIA { get; set; }
     }
 }

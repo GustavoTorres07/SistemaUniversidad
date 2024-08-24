@@ -1,0 +1,110 @@
+﻿@model SistemaUniversidad.Models.RolCLS
+
+@{
+    ViewBag.Title = "Agregar Rol";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<style>
+    /* Estilo para aumentar el tamaño de la fuente del nombre del rol */
+    .nombre-rol {
+        font-size: 18px;
+    }
+
+    /* Cambia el color del encabezado "Agregar Rol" */
+    .custom-header {
+        background-color: #3AA4F0;
+        color: #fff;
+    }
+
+    /* Estilo para los botones */
+    .btn-success, .btn-danger {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 0 10px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    /* Estilo para el contenedor de los botones */
+    .footer-buttons {
+        margin-top: 30px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+
+    /* Ajustar el contenedor del formulario */
+    .form-container {
+        padding-bottom: 100px;
+    }
+
+    /* Estilo para los dropdowns personalizados */
+    .custom-dropdown {
+        width: 100%;
+    }
+
+    /* Estilo para poner en negrita los nombres de los label */
+    label {
+        font-weight: bold;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-5 form-container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header custom-header text-center">
+                        <h4 class="mb-0">Agregar Rol</h4>
+                    </div>
+                    <div class="card-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            <label for="nombreRol">Nombre del Rol</label>
+                            @Html.EditorFor(model => model.nombreRol, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.nombreRol, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estadoRol">Estado</label>
+                            @Html.DropDownListFor(model => model.estadoRol, new SelectList(new[] {
+                                new { Value = true, Text = "Activo" },
+                                new { Value = false, Text = "Inactivo" }
+                            }, "Value", "Text"), "Selecciona un estado", new { @class = "form-control custom-dropdown" })
+                            @Html.ValidationMessageFor(model => model.estadoRol, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="card-footer footer-buttons">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <a href="@Url.Action("Index", "Rol")" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

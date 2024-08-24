@@ -25,25 +25,22 @@ namespace SistemaUniversidad.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ADMINISTRADOR> ADMINISTRADOR { get; set; }
-        public virtual DbSet<AUXILIAR> AUXILIAR { get; set; }
         public virtual DbSet<CARRERA> CARRERA { get; set; }
         public virtual DbSet<CICLO> CICLO { get; set; }
         public virtual DbSet<CIUDAD> CIUDAD { get; set; }
-        public virtual DbSet<ESTADOAUXILIAR> ESTADOAUXILIAR { get; set; }
         public virtual DbSet<ESTADOESTUDIANTE> ESTADOESTUDIANTE { get; set; }
         public virtual DbSet<ESTADOINSCRIPCIONESTUDIANTE> ESTADOINSCRIPCIONESTUDIANTE { get; set; }
         public virtual DbSet<ESTADOINSCRIPCIONPROFESOR> ESTADOINSCRIPCIONPROFESOR { get; set; }
         public virtual DbSet<ESTADOMATERIA> ESTADOMATERIA { get; set; }
-        public virtual DbSet<ESTADOPROFESOR> ESTADOPROFESOR { get; set; }
+        public virtual DbSet<ESTADOUSUARIO> ESTADOUSUARIO { get; set; }
         public virtual DbSet<ESTUDIANTE> ESTUDIANTE { get; set; }
         public virtual DbSet<GESTIONMATERIA> GESTIONMATERIA { get; set; }
-        public virtual DbSet<INSCRIPCIONESTUDIANTE> INSCRIPCIONESTUDIANTE { get; set; }
+        public virtual DbSet<INSCRIPCIONESTUDIANTEMATERIA> INSCRIPCIONESTUDIANTEMATERIA { get; set; }
         public virtual DbSet<INSCRIPCIONPROFESOR> INSCRIPCIONPROFESOR { get; set; }
         public virtual DbSet<MATERIA> MATERIA { get; set; }
         public virtual DbSet<PLANESTUDIO> PLANESTUDIO { get; set; }
-        public virtual DbSet<PROFESION> PROFESION { get; set; }
-        public virtual DbSet<PROFESOR> PROFESOR { get; set; }
+        public virtual DbSet<ROL> ROL { get; set; }
         public virtual DbSet<SEXO> SEXO { get; set; }
+        public virtual DbSet<USUARIO> USUARIO { get; set; }
     }
 }

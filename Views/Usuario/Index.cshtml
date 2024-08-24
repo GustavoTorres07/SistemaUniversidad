@@ -1,0 +1,121 @@
+﻿@model IEnumerable<SistemaUniversidad.Models.USUARIO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/tabla.css">
+    <link rel="stylesheet" href="~/Content/BarraMenu.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/5/7H7h9vr6j+to6C6ih/aH+R9CEy+CExH/H+B8X" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Tabla de Usuarios</title>
+</head>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4"><u>Lista de Usuarios</u></h2>
+
+    <!-- Botón para crear un nuevo usuario -->
+    <div class="mb-3">
+        <a href="@Url.Action("AgregarUsuario", "Usuario")" class="btn btn-success">Registrar Nuevo Usuario</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Apellido</th>
+                    <th class="text-center">Edad</th>
+                    <th class="text-center">DNI</th>
+                    <th class="text-center">Ciudad</th>
+                    <th class="text-center">Fecha Nacimiento</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Sexo</th>
+                    <th class="text-center">Usuario</th>
+                    <th class="text-center">Clave Usuario</th> <!-- Cambiado para mostrar la clave encriptada -->
+                    <th class="text-center">Fecha Registro</th>
+                    <th class="text-center">Rol</th>
+                    <th class="text-center">Celular</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Activo?</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.nombreUsuario)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.apellidoUsuario)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.edadUsuario)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.dniUsuario)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.CIUDAD.nombreCiudad)</td>
+                        <td class="text-center fecha-registro nowrap">@item.fechaNacimientoUsuario.ToString("dd-MM-yyyy")</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.emailUsuario)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.SEXO.nombreSexo)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.usuarioUsuario)</td>
+                        <td class="text-center">*****</td> <!-- Mostrar ***** en lugar de la clave -->
+                        <td class="text-center fecha-registro nowrap">@item.fechaRegistroUsuario.ToString("dd-MM-yyyy")</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.ROL.nombreRol)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.celularUsuario)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.ESTADOUSUARIO.nombreEstadoUsuario)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.activo)</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("EditarUsuario", "Usuario", new { idUsuario = item.idUsuario })'">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal" data-usuarioid="@item.idUsuario" data-usuarionombre="@item.nombreUsuario">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal de Confirmación para Eliminar Usuario -->
+<div class="modal fade" id="eliminarUsuarioModal" tabindex="-1" aria-labelledby="eliminarUsuarioModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarUsuarioModalLabel">Eliminar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar el usuario <strong id="usuarioNombre"></strong>?
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("EliminarUsuario", "Usuario", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="idUsuario" id="usuarioId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $('#eliminarUsuarioModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que abrió el modal
+            var usuarioId = button.data('usuarioid'); // Extraer la información del atributo data-*
+            var usuarioNombre = button.data('usuarionombre'); // Extraer la información del atributo data-*
+
+            var modal = $(this);
+            modal.find('.modal-body #usuarioNombre').text(usuarioNombre);
+            modal.find('.modal-footer #usuarioId').val(usuarioId);
+        });
+    </script>
+}

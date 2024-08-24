@@ -16,7 +16,6 @@ namespace SistemaUniversidad.Models
     {
         public int idGestionMateria { get; set; }
         public int estudiante_id { get; set; }
-        public int profesor_id { get; set; }
         public int materia_id { get; set; }
         public int examen1 { get; set; }
         public Nullable<int> recupExamen1 { get; set; }
@@ -28,10 +27,11 @@ namespace SistemaUniversidad.Models
         public Nullable<int> examenFinal { get; set; }
         public Nullable<int> estadoMateria_id { get; set; }
         public System.DateTime anioCursada { get; set; }
+        public int rol_id { get; set; }
     
         public virtual ESTADOMATERIA ESTADOMATERIA { get; set; }
         public virtual ESTUDIANTE ESTUDIANTE { get; set; }
         public virtual MATERIA MATERIA { get; set; }
-        public virtual PROFESOR PROFESOR { get; set; }
+        public virtual ROL ROL { get; set; }
     }
 }
