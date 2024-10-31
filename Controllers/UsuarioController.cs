@@ -5,25 +5,54 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using BCrypt.Net;
+using SistemaUniversidad.Filters;
+using PagedList;
 
 namespace SistemaUniversidad.Controllers
 {
-    public class UsuarioController : Controller
+    [CustomAuthorize("Administrador", "Auxiliar")]
+    public class UsuarioController : BaseController
     {
         private UniversidadContext db = new UniversidadContext();
 
         // GET: Usuario
-        public ActionResult Index()
+        public ActionResult Index(string search = "", bool? toggle = false, int? page = 1)
         {
-            var usuarios = db.USUARIO
-                .Include("CIUDAD")
-                .Include("SEXO")
-                .Include("ROL")
-                .Include("ESTADOUSUARIO")
-                .ToList();
+            int pageNumber = page ?? 1;
+            int pageSize = 5; // Número de registros por página
 
-            return View(usuarios);
+            // Obtener todos los usuarios como IQueryable
+            var usuarios = db.USUARIO.AsQueryable();
+
+            // Filtrar los usuarios según la búsqueda
+            if (!string.IsNullOrEmpty(search))
+            {
+                if (toggle.HasValue && toggle.Value)
+                {
+                    // Buscar por DNI
+                    usuarios = usuarios.Where(u => u.dniUsuario.ToString().Contains(search));
+                }
+                else
+                {
+                    // Buscar por nombre de usuario
+                    usuarios = usuarios.Where(u => u.nombreUsuario.Contains(search));
+                }
+            }
+
+            // Asegúrate de ordenar los datos antes de paginar
+            usuarios = usuarios.OrderBy(u => u.nombreUsuario); // Ordenar por nombre de usuario o cualquier otra propiedad
+
+            // Paginación: Usa ToPagedList para paginar los usuarios
+            var paginatedUsuarios = usuarios.ToPagedList(pageNumber, pageSize);
+
+            // Preparar los datos necesarios para la vista.
+            ViewBag.Roles = new SelectList(db.ROL, "idRol", "nombreRol");
+            ViewBag.EstadosUsuarios = new SelectList(db.ESTADOUSUARIO, "idEstadoUsuario", "nombreEstadoUsuario");
+
+            // Mostrar la vista con los usuarios paginados.
+            return View(paginatedUsuarios);
         }
+
 
         // GET: AgregarUsuario
         [HttpGet]
@@ -212,6 +241,36 @@ namespace SistemaUniversidad.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // GET: Usuario/Detalle
+        [HttpGet]
+        public ActionResult DetalleUsuario(int idUsuario)
+        {
+            try
+            {
+                // Obtener el usuario por ID y cargar sus relaciones (si es necesario)
+                var usuario = db.USUARIO
+                    .Include(u => u.ROL)  // Incluye el rol del usuario
+                    .SingleOrDefault(u => u.idUsuario == idUsuario);
+
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Preparar los datos para los campos desplegables
+                ViewBag.Roles = new SelectList(db.ROL, "idRol", "nombreRol", usuario.rol_id);
+
+                // Retornar el usuario a la vista
+                return View(usuario);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Ocurrió un error al cargar el usuario: " + ex.Message);
+                return RedirectToAction("Index");
+            }
+        }
+
 
         // Método privado para rellenar los ViewBag para los dropdowns en las vistas
         private void RellenarViewBag(UsuarioCLS usuario = null)

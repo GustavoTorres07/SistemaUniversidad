@@ -18,7 +18,6 @@ namespace SistemaUniversidad.Models
         public ROL()
         {
             this.GESTIONMATERIA = new HashSet<GESTIONMATERIA>();
-            this.INSCRIPCIONESTUDIANTEMATERIA = new HashSet<INSCRIPCIONESTUDIANTEMATERIA>();
             this.INSCRIPCIONPROFESOR = new HashSet<INSCRIPCIONPROFESOR>();
             this.USUARIO = new HashSet<USUARIO>();
         }
@@ -29,8 +28,6 @@ namespace SistemaUniversidad.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GESTIONMATERIA> GESTIONMATERIA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<INSCRIPCIONESTUDIANTEMATERIA> INSCRIPCIONESTUDIANTEMATERIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INSCRIPCIONPROFESOR> INSCRIPCIONPROFESOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

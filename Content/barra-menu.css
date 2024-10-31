@@ -1,0 +1,186 @@
+﻿/* Vincular fuente moderna desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;display=swap'); /* Importa la fuente Montserrat con pesos 400 y 600 */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;display=swap'); /* Importa la fuente Poppins con pesos 400 y 600 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;display=swap'); /* Importa la fuente Roboto con pesos 400 y 500 */
+
+/* Estilos generales */
+html, body {
+    font-family: 'Roboto', sans-serif; /* Define la fuente del cuerpo del texto como Roboto */
+    margin: 0; /* Elimina el margen por defecto del cuerpo */
+    padding: 0; /* Elimina el relleno por defecto del cuerpo */
+    background: #f4f4f4; /* Establece un color de fondo gris claro para el cuerpo */
+    color: #333; /* Establece el color del texto a un gris oscuro */
+    min-height: 100vh; /* Asegura que el cuerpo ocupe al menos el 100% de la altura de la ventana */
+    display: flex;
+    flex-direction: column; /* Alinea el contenido en una columna */
+}
+
+/* Estilos de la barra de navegación */
+nav {
+    font-family: 'Poppins', sans-serif; /* Define la fuente de la barra de navegación como Poppins */
+    background: linear-gradient(to right, #41488B, #87CEEB); /* Aplica un degradado de color azul para el fondo de la barra */
+    border-radius: 5px; /* Redondea las esquinas de la barra de navegación */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añade una sombra sutil alrededor de la barra */
+    z-index: 1000; /* Asegura que la barra esté por encima de otros elementos */
+    position: relative; /* Permite la posición relativa para los elementos hijos */
+    padding: 0.5rem 1rem; /* Añade espaciado interno a la barra */
+    height: 60px; /* Establece una altura fija para la barra */
+    display: flex; /* Usa Flexbox para el diseño de los elementos dentro de la barra */
+    align-items: center; /* Alinea verticalmente los elementos dentro de la barra */
+}
+
+    /* Estilo de los elementos de la barra de navegación */
+    nav ul {
+        list-style-type: none; /* Elimina los puntos de la lista */
+        padding-inline-start: 0; /* Elimina el relleno a la izquierda */
+        margin: 0; /* Elimina el margen de la lista */
+        display: flex; /* Usa Flexbox para alinear horizontalmente los elementos de la lista */
+        align-items: center; /* Alinea verticalmente los elementos de la lista */
+        flex: 1; /* Permite que la lista se expanda para ocupar el espacio disponible */
+    }
+
+        nav ul li {
+            position: relative; /* Establece la posición relativa para los elementos de la lista */
+        }
+
+            nav ul li:hover {
+                background: linear-gradient(to right, #FF0000, #FF6347); /* Cambia el fondo al pasar el ratón sobre el elemento de la lista */
+                box-shadow: 0 6px 10px rgba(0, 0, 0, 0.8); /* Añade una sombra más pronunciada al pasar el ratón */
+                color: black; /* Cambia el color del texto al pasar el ratón */
+            }
+
+        nav ul ul {
+            display: none; /* Oculta los submenús por defecto */
+            position: absolute; /* Posiciona el submenú de manera absoluta respecto al elemento padre */
+            background: linear-gradient(to right, #41488B, #6E7590); /* Aplica un degradado de color al fondo del submenú */
+            border-radius: 0 0 10px 10px; /* Redondea las esquinas inferiores del submenú */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añade una sombra sutil al submenú */
+            z-index: 999; /* Asegura que el submenú esté por encima de otros elementos */
+            top: 100%; /* Posiciona el submenú justo debajo del elemento padre */
+            left: 0; /* Posiciona el submenú a la izquierda del elemento padre */
+        }
+
+            nav ul ul ul {
+                top: 0; /* Posiciona el sub-submenú al nivel del elemento padre */
+                left: 100%; /* Posiciona el sub-submenú a la derecha del submenú padre */
+            }
+
+        nav ul li:hover > ul {
+            display: block; /* Muestra el submenú al pasar el ratón sobre el elemento de la lista */
+        }
+
+    nav a {
+        font-weight: bold; /* Aplica un peso de fuente en negrita a los enlaces */
+        color: white; /* Establece el color del texto de los enlaces */
+        text-decoration: none; /* Elimina el subrayado de los enlaces */
+        display: inline-block; /* Permite ajustar el espaciado alrededor de los enlaces */
+        padding: 0.5rem 1rem; /* Añade espaciado interno a los enlaces */
+    }
+
+        nav a:hover {
+            color: black; /* Cambia el color del texto de los enlaces al pasar el ratón (puedes ajustar el color aquí) */
+        }
+
+        nav a:not(:only-child)::after {
+            content: "\f107"; /* Agrega un ícono de flecha hacia abajo después del enlace si tiene hijos */
+            font-family: 'Font Awesome 5 Free'; /* Usa la fuente Font Awesome para el ícono */
+            margin-left: 0.5em; /* Añade espacio entre el texto del enlace y el ícono */
+            font-weight: 900; /* Aplica un peso de fuente negrita al ícono */
+        }
+
+    nav ul ul li:hover > a {
+        color: black; /* Cambia el color del texto del enlace en el submenú al pasar el ratón */
+    }
+
+/* Estilos para el contenedor de usuario en la barra de navegación */
+.user-info-header {
+    position: absolute; /* Posiciona el contenedor de información del usuario de manera absoluta */
+    top: 50%; /* Centra verticalmente el contenedor en la barra de navegación */
+    right: 1rem; /* Posiciona el contenedor a la derecha de la barra de navegación */
+    color: white; /* Establece el color del texto del contenedor de usuario */
+    text-align: right; /* Alinea el texto a la derecha */
+    display: flex; /* Usa Flexbox para el diseño de los elementos dentro del contenedor */
+    align-items: center; /* Alinea verticalmente los elementos dentro del contenedor */
+    gap: 1rem; /* Añade espacio entre los elementos dentro del contenedor */
+    transform: translateY(-50%); /* Ajusta la posición vertical del contenedor */
+    cursor: default; /* Cambia el cursor a la forma predeterminada */
+    font-family: 'Montserrat', sans-serif; /* Define la fuente del contenedor de usuario como Montserrat */
+    font-weight: 600; /* Aplica un peso de fuente seminegrita */
+    margin-top: 4rem;
+    /* Fondo y borde ajustados */
+    background: linear-gradient(to right, #3B4A77, #7A9AC5); /* Azul menos oscuro */
+    padding: 0.5rem 1rem; /* Añade padding alrededor del contenido */
+    border-radius: 8px; /* Bordes redondeados para el cuadro */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    border: 1px solid #3B4A77; /* Borde del mismo color que el fondo ajustado */
+}
+
+    /* Estilo del texto del rol del usuario */
+    .user-info-header .user-role {
+        font-weight: 600; /* Aplica un peso de fuente normal al rol del usuario */
+        color: white; /* Establece el color del texto del rol del usuario como negro */
+    }
+
+    /* Estilo del texto del nombre del usuario */
+    .user-info-header .user-name {
+        font-weight: 600; /* Aplica un peso de fuente seminegrita al nombre del usuario */
+        color: white; /* Establece el color del texto del nombre del usuario como negro */
+    }
+
+/* Estilo de la tarjeta */
+.card {
+    margin-top: 20px; /* Añade margen superior a la tarjeta */
+    z-index: 0; /* Establece el índice de apilamiento para la tarjeta */
+}
+
+/* Estilos del texto del logotipo */
+.logo-text {
+    font-size: 1.5rem; /* Establece el tamaño de fuente del texto del logotipo */
+    font-weight: 600; /* Aplica un peso de fuente seminegrita al texto del logotipo */
+    color: white; /* Establece el color del texto del logotipo como blanco */
+}
+.footer {
+    background-color: #f5f5f5;
+    padding: 0.3rem; /* Reducción del padding */
+    text-align: center;
+    border-top: 1px solid #ddd; /* Línea superior discreta */
+    font-size: 0.8rem; /* Tamaño de fuente más pequeño */
+    color: black; /* Color de texto más suave */
+    margin-top: auto;
+}
+
+    .footer p {
+        margin: 0; /* Elimina el margen para que el texto se ajuste mejor */
+    }
+
+    .footer a {
+        color: #007bff; /* Color del enlace */
+        text-decoration: none;
+    }
+
+        .footer a:hover {
+            text-decoration: underline; /* Enlaces con subrayado al pasar el cursor */
+        }
+
+
+.pagination .page-link {
+    border-radius: 0.375rem;
+    border-color: #dee2e6;
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.125rem;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.pagination .page-item a {
+    text-decoration: none;
+}

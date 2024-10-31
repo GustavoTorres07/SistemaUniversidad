@@ -16,18 +16,10 @@ namespace SistemaUniversidad.Models
     {
         public int idInscripcionEstudianteMateria { get; set; }
         public int estudiante_id { get; set; }
-        public int carrera_id { get; set; }
-        public int ciclo_id { get; set; }
         public int materia_id { get; set; }
         public System.DateTime fechaInscripcionEstudiante { get; set; }
-        public int estadoInscripcionEstudiante_id { get; set; }
-        public int rol_id { get; set; }
     
-        public virtual CARRERA CARRERA { get; set; }
-        public virtual CICLO CICLO { get; set; }
-        public virtual ESTADOINSCRIPCIONESTUDIANTE ESTADOINSCRIPCIONESTUDIANTE { get; set; }
         public virtual ESTUDIANTE ESTUDIANTE { get; set; }
         public virtual MATERIA MATERIA { get; set; }
-        public virtual ROL ROL { get; set; }
     }
 }

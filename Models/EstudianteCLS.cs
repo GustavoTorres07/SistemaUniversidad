@@ -64,6 +64,11 @@ namespace SistemaUniversidad.Models
 
         public bool? activo {  get; set; }
 
+        [Required(ErrorMessage = "El número de teléfono es obligatorio.")]
+        [RegularExpression(@"^\s*\d{10}\s*$", ErrorMessage = "El número de teléfono debe tener exactamente 10 dígitos.")]
+        [Display(Name = "Número de teléfono")]
+        public int? telefono { get; set; }    
+
         // Propiedades de navegación (opcional)
         public virtual CIUDAD Ciudad { get; set; }
         public virtual SEXO Sexo { get; set; }

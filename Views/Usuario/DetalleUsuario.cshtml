@@ -1,0 +1,154 @@
+﻿@model SistemaUniversidad.Models.USUARIO
+
+@{
+    ViewBag.Title = "DetalleUsuario";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<style>
+    .nombre-usuario {
+        font-size: 18px;
+    }
+
+    .custom-header {
+        background-color: #3AA4F0;
+        color: #fff;
+    }
+
+    .btn-success, .btn-danger {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 0 10px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .footer-buttons {
+        margin-top: 30px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .form-container {
+        padding-bottom: 100px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+        .form-group label, .form-group p {
+            width: 45%;
+            margin: 0;
+        }
+
+        .form-group p {
+            text-align: left;
+            margin-left: 15px;
+        }
+
+    .col-md-6 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .estado-activo {
+        color: green;
+        font-weight: bold;
+    }
+
+    .estado-inactivo {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container mt-5 form-container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <div class="card">
+                <div class="card-header custom-header text-center">
+                    <h4 class="mb-0">Detalle del Usuario</h4>
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row">
+                        <!-- Columna izquierda -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nombreUsuario">Nombre</label>
+                                <p>@Html.DisplayFor(model => model.nombreUsuario)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoUsuario">Apellido</label>
+                                <p>@Html.DisplayFor(model => model.apellidoUsuario)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="dniUsuario">DNI</label>
+                                <p>@Html.DisplayFor(model => model.dniUsuario)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="ciudad">Ciudad</label>
+                                <p>@Html.DisplayFor(model => model.CIUDAD.nombreCiudad)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="claveUsuario">Clave Usuario</label>
+                                <p>*****</p> <!-- Muestra '***' en lugar de la clave -->
+                            </div>
+                        </div>
+                        <!-- Columna derecha -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="emailUsuario">Correo Electrónico</label>
+                                <p>@Html.DisplayFor(model => model.emailUsuario)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaNacimientoUsuario">Fecha de Nacimiento</label>
+                                <p>@Model.fechaNacimientoUsuario.ToString("dd/MM/yyyy")</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="sexo">Sexo</label>
+                                <p>@Html.DisplayFor(model => model.SEXO.nombreSexo)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="rol">Rol</label>
+                                <p>@Html.DisplayFor(model => model.ROL.nombreRol)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="activo">Estado</label>
+                                <p class="@((bool)Model.activo ? "estado-activo" : "estado-inactivo")">
+                                    @((bool)Model.activo ? "Activo" : "Inactivo")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-buttons">
+                        <a href="@Url.Action("Index", "Usuario")" class="btn btn-danger">Volver a la lista de Usuarios</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

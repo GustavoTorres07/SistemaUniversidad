@@ -35,6 +35,7 @@ namespace SistemaUniversidad.Models
         public System.DateTime fechaRegistroEstudiante { get; set; }
         public int carrera_id { get; set; }
         public Nullable<bool> activo { get; set; }
+        public Nullable<int> telefono { get; set; }
     
         public virtual CARRERA CARRERA { get; set; }
         public virtual CIUDAD CIUDAD { get; set; }

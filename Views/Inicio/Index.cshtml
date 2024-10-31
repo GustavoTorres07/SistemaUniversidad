@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
 }
@@ -7,32 +6,91 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Universitario</title>
-    <link rel="stylesheet" href="~/Content/PantallaInicio.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/tabla.css">
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/pagina-inicio.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <div class="container">
+        <header>
+            <div class="welcome-header">
+                <h1>Bienvenido al Sistema Universitario v1.0</h1>
+            </div>
+        </header>
 
-    <header>
-        <div class="container">
-            <h1>Bienvenido al Sistema Universitario v1.0</h1>
-        </div>
-    </header>
-
-    <main>
-        <div class="container">
+        <main>
             <div class="welcome-message">
-                <h2>Hola, [Nombre del Usuario]</h2>
                 <p>Te damos la bienvenida al sistema universitario. Aquí podrás acceder a toda la información académica de manera fácil y rápida.</p>
             </div>
 
-            <div class="user-info">
-                <p>Nombre del Usuario: [Nombre del Usuario]</p>
-                <p>Rol: [Rol del Usuario]</p>
+            <div class="notificaciones-titulo-container">
+                <h2 class="notificaciones-titulo">Últimas Notificaciones</h2>
             </div>
-        </div>
-    </main>
+
+            <!-- Contenedor de notificaciones -->
+            <div class="notificaciones-section">
+                <!-- Sección de notificaciones dinámica -->
+                <div class="notificaciones-container">
+                    <div class="notificaciones-inner">
+                        <!-- Notificación 1 -->
+                        <div class="notificacion">
+                            <h4>Nuevo Ciclo de Inscripciones - 20 Septiembre 2024</h4>
+                            <p>El nuevo ciclo de inscripciones estará disponible a partir de la próxima semana.</p>
+                            <span class="fecha">20/09/2024</span>
+                        </div>
+
+                        <!-- Notificación 2 -->
+                        <div class="notificacion">
+                            <h4>Mantenimiento Programado - 15 Septiembre 2024</h4>
+                            <p>El sistema no estará disponible de 00:00 a 03:00 debido a mantenimiento.</p>
+                            <span class="fecha">15/09/2024</span>
+                        </div>
+
+                        <!-- Notificación 3 -->
+                        <div class="notificacion">
+                            <h4>Actualización del Sistema - 10 Septiembre 2024</h4>
+                            <p>Se ha lanzado una nueva versión del sistema que incluye mejoras en la gestión de inscripciones.</p>
+                            <span class="fecha">10/09/2024</span>
+                        </div>
+
+                        <!-- Repite el contenido para asegurar el desplazamiento continuo -->
+                        <div class="notificacion">
+                            <h4>Nuevo Ciclo de Inscripciones - 20 Septiembre 2024</h4>
+                            <p>El nuevo ciclo de inscripciones estará disponible a partir de la próxima semana.</p>
+                            <span class="fecha">20/09/2024</span>
+                        </div>
+
+                        <div class="notificacion">
+                            <h4>Mantenimiento Programado - 15 Septiembre 2024</h4>
+                            <p>El sistema no estará disponible de 00:00 a 03:00 debido a mantenimiento.</p>
+                            <span class="fecha">15/09/2024</span>
+                        </div>
+
+                        <div class="notificacion">
+                            <h4>Actualización del Sistema - 10 Septiembre 2024</h4>
+                            <p>Se ha lanzado una nueva versión del sistema que incluye mejoras en la gestión de inscripciones.</p>
+                            <span class="fecha">10/09/2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   
+
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.querySelector('.notificaciones-container');
+            let clone = container.cloneNode(true);
+            container.appendChild(clone);
+        });
+    </script>
 </body>
 </html>
-

@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace SistemaUniversidad.Controllers
 {
-    public class EstadoEstudianteController : Controller
+    public class EstadoEstudianteController : BaseController
     {
         private UniversidadContext db = new UniversidadContext();
 

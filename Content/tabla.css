@@ -1,40 +1,88 @@
-﻿/* Estilos generales de la tabla */
+﻿.table-responsive {
+    overflow-x: auto; /* Permite scroll si es necesario */
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+}
+
 .table {
-    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
-    border-collapse: collapse; /* Colapsa bordes para un mejor diseño */
-    font-family: Arial, sans-serif; /* Fuente legible y moderna */
-    margin: 20px 0; /* Margen para separar la tabla del contenido circundante */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Sombra suave para darle profundidad */
-    table-layout: auto; /* Permite que las celdas se ajusten automáticamente al contenido */
-    background-color: #fff; /* Fondo claro para toda la tabla */
-    border-radius: 10px; /* Bordes redondeados */
-    overflow: hidden; /* Evita el desbordamiento */
+    width: auto; /* Deja que la tabla se ajuste automáticamente a su contenido */
+    min-width: 100%; /* Asegura que la tabla ocupe al menos el 100% del contenedor */
+    table-layout: auto; /* Permite que las celdas se ajusten a su contenido */
+    border-collapse: collapse; /* Unifica los bordes de las celdas */
 }
 
-    .table th {
-        padding: 15px 10px; /* Espaciado interno */
-        text-align: center; /* Alinea el texto al centro */
-        background-color: #007bff; /* Color de fondo para encabezados */
-        color: white; /* Color del texto de los encabezados */
-        border-bottom: 2px solid #0056b3; /* Borde inferior para separación */
+    .table th, .table td {
+        padding: 12px; /* Espacio interno de las celdas */
+        text-align: center; /* Centra el contenido en las celdas */
+        vertical-align: middle; /* Centra verticalmente el texto */
+        white-space: nowrap; /* Evita que el contenido haga saltos de línea */
+        overflow: hidden; /* Esconde cualquier contenido que sobresalga */
+        text-overflow: ellipsis; /* Muestra puntos suspensivos si el contenido es demasiado largo */
     }
 
-    .table td {
-        padding: 15px 10px; /* Espaciado interno */
-        text-align: center; /* Alinea el texto al centro */
-        border-bottom: 1px solid #dee2e6; /* Borde delgado y claro */
-        overflow: visible; /* Permite que el contenido se muestre completamente */
-        white-space: nowrap; /* Mantiene el texto en una sola línea */
+    .table thead th {
+        background-color: #343a40; /* Color de fondo del encabezado */
+        color: white; /* Color de texto del encabezado */
+        font-weight: bold; /* Texto en negrita */
     }
 
-/* Asegura que los botones estén en línea */
-.btn-group {
-    display: inline-block; /* Coloca los botones en línea */
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2; /* Color de fondo para las filas pares */
+    }
+
+    .table tbody tr:hover {
+        background-color: #ddd; /* Color al pasar el cursor sobre las filas */
+    }
+
+/* Ajuste para evitar que las celdas se compriman demasiado en pantallas pequeñas */
+@media (max-width: 768px) {
+    .table {
+        font-size: 14px; /* Reduce el tamaño del texto en pantallas pequeñas */
+    }
+
+        .table th, .table td {
+            padding: 8px; /* Reduce el padding en pantallas pequeñas */
+        }
 }
 
-/* Ajuste específico para la celda de carrera */
-.carrera {
-    overflow: visible; /* Permite que el contenido se muestre sin desbordar */
-    white-space: nowrap; /* Mantiene el texto en una sola línea */
-    max-width: none; /* Asegura que no haya límite de ancho */
+/* Botones y estilo de paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+}
+
+.page-item {
+    margin: 0 3px;
+}
+
+    .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+
+.page-link {
+    color: #007bff;
+}
+
+    .page-link:hover {
+        color: #0056b3;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+/* Estilo de botones */
+.btn {
+    margin: 2px;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-primary, .btn-info {
+    margin: 2px;
 }

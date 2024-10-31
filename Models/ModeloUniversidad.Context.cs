@@ -29,7 +29,6 @@ namespace SistemaUniversidad.Models
         public virtual DbSet<CICLO> CICLO { get; set; }
         public virtual DbSet<CIUDAD> CIUDAD { get; set; }
         public virtual DbSet<ESTADOESTUDIANTE> ESTADOESTUDIANTE { get; set; }
-        public virtual DbSet<ESTADOINSCRIPCIONESTUDIANTE> ESTADOINSCRIPCIONESTUDIANTE { get; set; }
         public virtual DbSet<ESTADOINSCRIPCIONPROFESOR> ESTADOINSCRIPCIONPROFESOR { get; set; }
         public virtual DbSet<ESTADOMATERIA> ESTADOMATERIA { get; set; }
         public virtual DbSet<ESTADOUSUARIO> ESTADOUSUARIO { get; set; }

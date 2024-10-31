@@ -36,13 +36,6 @@
           <Property Name="nombreEstadoEstudiante" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="estado" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="ESTADOINSCRIPCIONESTUDIANTE">
-          <Key>
-            <PropertyRef Name="idEstadoInscripcionEstudiante" />
-          </Key>
-          <Property Name="idEstadoInscripcionEstudiante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombreEstadoInscripcionEstudiante" Type="varchar" MaxLength="250" Nullable="false" />
-        </EntityType>
         <EntityType Name="ESTADOINSCRIPCIONPROFESOR">
           <Key>
             <PropertyRef Name="idEstadoInscripcionProfesor" />
@@ -83,6 +76,7 @@
           <Property Name="fechaRegistroEstudiante" Type="date" Nullable="false" />
           <Property Name="carrera_id" Type="int" Nullable="false" />
           <Property Name="activo" Type="bit" />
+          <Property Name="telefono" Type="int" />
         </EntityType>
         <EntityType Name="GESTIONMATERIA">
           <Key>
@@ -109,12 +103,8 @@
           </Key>
           <Property Name="idInscripcionEstudianteMateria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="estudiante_id" Type="int" Nullable="false" />
-          <Property Name="carrera_id" Type="int" Nullable="false" />
-          <Property Name="ciclo_id" Type="int" Nullable="false" />
           <Property Name="materia_id" Type="int" Nullable="false" />
           <Property Name="fechaInscripcionEstudiante" Type="date" Nullable="false" />
-          <Property Name="estadoInscripcionEstudiante_id" Type="int" Nullable="false" />
-          <Property Name="rol_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="INSCRIPCIONPROFESOR">
           <Key>
@@ -296,42 +286,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_INSCRIPCIONESTUDIANTE_CARRERA">
-          <End Role="CARRERA" Type="Self.CARRERA" Multiplicity="1" />
-          <End Role="INSCRIPCIONESTUDIANTEMATERIA" Type="Self.INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CARRERA">
-              <PropertyRef Name="idCarrera" />
-            </Principal>
-            <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
-              <PropertyRef Name="carrera_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INSCRIPCIONESTUDIANTE_CICLO">
-          <End Role="CICLO" Type="Self.CICLO" Multiplicity="1" />
-          <End Role="INSCRIPCIONESTUDIANTEMATERIA" Type="Self.INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CICLO">
-              <PropertyRef Name="idCiclo" />
-            </Principal>
-            <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
-              <PropertyRef Name="ciclo_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE">
-          <End Role="ESTADOINSCRIPCIONESTUDIANTE" Type="Self.ESTADOINSCRIPCIONESTUDIANTE" Multiplicity="1" />
-          <End Role="INSCRIPCIONESTUDIANTEMATERIA" Type="Self.INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ESTADOINSCRIPCIONESTUDIANTE">
-              <PropertyRef Name="idEstadoInscripcionEstudiante" />
-            </Principal>
-            <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
-              <PropertyRef Name="estadoInscripcionEstudiante_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_INSCRIPCIONESTUDIANTE_ESTUDIANTE">
           <End Role="ESTUDIANTE" Type="Self.ESTUDIANTE" Multiplicity="1" />
           <End Role="INSCRIPCIONESTUDIANTEMATERIA" Type="Self.INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
@@ -353,18 +307,6 @@
             </Principal>
             <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
               <PropertyRef Name="materia_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INSCRIPCIONESTUDIANTEMATERIA_ROL">
-          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
-          <End Role="INSCRIPCIONESTUDIANTEMATERIA" Type="Self.INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ROL">
-              <PropertyRef Name="idRol" />
-            </Principal>
-            <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
-              <PropertyRef Name="rol_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -517,7 +459,6 @@
           <EntitySet Name="CICLO" EntityType="Self.CICLO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CIUDAD" EntityType="Self.CIUDAD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESTADOESTUDIANTE" EntityType="Self.ESTADOESTUDIANTE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ESTADOINSCRIPCIONESTUDIANTE" EntityType="Self.ESTADOINSCRIPCIONESTUDIANTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESTADOINSCRIPCIONPROFESOR" EntityType="Self.ESTADOINSCRIPCIONPROFESOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESTADOMATERIA" EntityType="Self.ESTADOMATERIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESTADOUSUARIO" EntityType="Self.ESTADOUSUARIO" Schema="dbo" store:Type="Tables" />
@@ -566,28 +507,12 @@
             <End Role="ROL" EntitySet="ROL" />
             <End Role="GESTIONMATERIA" EntitySet="GESTIONMATERIA" />
           </AssociationSet>
-          <AssociationSet Name="FK_INSCRIPCIONESTUDIANTE_CARRERA" Association="Self.FK_INSCRIPCIONESTUDIANTE_CARRERA">
-            <End Role="CARRERA" EntitySet="CARRERA" />
-            <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INSCRIPCIONESTUDIANTE_CICLO" Association="Self.FK_INSCRIPCIONESTUDIANTE_CICLO">
-            <End Role="CICLO" EntitySet="CICLO" />
-            <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE" Association="Self.FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE">
-            <End Role="ESTADOINSCRIPCIONESTUDIANTE" EntitySet="ESTADOINSCRIPCIONESTUDIANTE" />
-            <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
-          </AssociationSet>
           <AssociationSet Name="FK_INSCRIPCIONESTUDIANTE_ESTUDIANTE" Association="Self.FK_INSCRIPCIONESTUDIANTE_ESTUDIANTE">
             <End Role="ESTUDIANTE" EntitySet="ESTUDIANTE" />
             <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
           </AssociationSet>
           <AssociationSet Name="FK_INSCRIPCIONESTUDIANTE_MATERIA" Association="Self.FK_INSCRIPCIONESTUDIANTE_MATERIA">
             <End Role="MATERIA" EntitySet="MATERIA" />
-            <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INSCRIPCIONESTUDIANTEMATERIA_ROL" Association="Self.FK_INSCRIPCIONESTUDIANTEMATERIA_ROL">
-            <End Role="ROL" EntitySet="ROL" />
             <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
           </AssociationSet>
           <AssociationSet Name="FK_INSCRIPCIONPROFESOR_CARRERA" Association="Self.FK_INSCRIPCIONPROFESOR_CARRERA">
@@ -648,7 +573,6 @@
           <EntitySet Name="CICLO" EntityType="SistemaUniversidadDBModel.CICLO" />
           <EntitySet Name="CIUDAD" EntityType="SistemaUniversidadDBModel.CIUDAD" />
           <EntitySet Name="ESTADOESTUDIANTE" EntityType="SistemaUniversidadDBModel.ESTADOESTUDIANTE" />
-          <EntitySet Name="ESTADOINSCRIPCIONESTUDIANTE" EntityType="SistemaUniversidadDBModel.ESTADOINSCRIPCIONESTUDIANTE" />
           <EntitySet Name="ESTADOINSCRIPCIONPROFESOR" EntityType="SistemaUniversidadDBModel.ESTADOINSCRIPCIONPROFESOR" />
           <EntitySet Name="ESTADOMATERIA" EntityType="SistemaUniversidadDBModel.ESTADOMATERIA" />
           <EntitySet Name="ESTADOUSUARIO" EntityType="SistemaUniversidadDBModel.ESTADOUSUARIO" />
@@ -669,10 +593,6 @@
             <End Role="CARRERA" EntitySet="CARRERA" />
             <End Role="ESTUDIANTE" EntitySet="ESTUDIANTE" />
           </AssociationSet>
-          <AssociationSet Name="FK_INSCRIPCIONESTUDIANTE_CARRERA" Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_CARRERA">
-            <End Role="CARRERA" EntitySet="CARRERA" />
-            <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
-          </AssociationSet>
           <AssociationSet Name="FK_INSCRIPCIONPROFESOR_CARRERA" Association="SistemaUniversidadDBModel.FK_INSCRIPCIONPROFESOR_CARRERA">
             <End Role="CARRERA" EntitySet="CARRERA" />
             <End Role="INSCRIPCIONPROFESOR" EntitySet="INSCRIPCIONPROFESOR" />
@@ -684,10 +604,6 @@
           <AssociationSet Name="FK_PLANESTUDIO_CARRERA" Association="SistemaUniversidadDBModel.FK_PLANESTUDIO_CARRERA">
             <End Role="CARRERA" EntitySet="CARRERA" />
             <End Role="PLANESTUDIO" EntitySet="PLANESTUDIO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INSCRIPCIONESTUDIANTE_CICLO" Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_CICLO">
-            <End Role="CICLO" EntitySet="CICLO" />
-            <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
           </AssociationSet>
           <AssociationSet Name="FK_MATERIA_CICLO" Association="SistemaUniversidadDBModel.FK_MATERIA_CICLO">
             <End Role="CICLO" EntitySet="CICLO" />
@@ -708,10 +624,6 @@
           <AssociationSet Name="FK_ESTUDIANTE_ESTADOESTUDIANTE" Association="SistemaUniversidadDBModel.FK_ESTUDIANTE_ESTADOESTUDIANTE">
             <End Role="ESTADOESTUDIANTE" EntitySet="ESTADOESTUDIANTE" />
             <End Role="ESTUDIANTE" EntitySet="ESTUDIANTE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE" Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE">
-            <End Role="ESTADOINSCRIPCIONESTUDIANTE" EntitySet="ESTADOINSCRIPCIONESTUDIANTE" />
-            <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
           </AssociationSet>
           <AssociationSet Name="FK_INSCRIPCIONPROFESOR_ESTADOINSCRIPCIONPROFESOR" Association="SistemaUniversidadDBModel.FK_INSCRIPCIONPROFESOR_ESTADOINSCRIPCIONPROFESOR">
             <End Role="ESTADOINSCRIPCIONPROFESOR" EntitySet="ESTADOINSCRIPCIONPROFESOR" />
@@ -749,10 +661,6 @@
             <End Role="MATERIA" EntitySet="MATERIA" />
             <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
           </AssociationSet>
-          <AssociationSet Name="FK_INSCRIPCIONESTUDIANTEMATERIA_ROL" Association="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTEMATERIA_ROL">
-            <End Role="ROL" EntitySet="ROL" />
-            <End Role="INSCRIPCIONESTUDIANTEMATERIA" EntitySet="INSCRIPCIONESTUDIANTEMATERIA" />
-          </AssociationSet>
           <AssociationSet Name="FK_INSCRIPCIONPROFESOR_ROL" Association="SistemaUniversidadDBModel.FK_INSCRIPCIONPROFESOR_ROL">
             <End Role="ROL" EntitySet="ROL" />
             <End Role="INSCRIPCIONPROFESOR" EntitySet="INSCRIPCIONPROFESOR" />
@@ -779,7 +687,6 @@
           <Property Name="cantidadCiclo" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CICLO" Relationship="SistemaUniversidadDBModel.FK_CICLO_CARRERA" FromRole="CARRERA" ToRole="CICLO" />
           <NavigationProperty Name="ESTUDIANTE" Relationship="SistemaUniversidadDBModel.FK_ESTUDIANTE_CARRERA" FromRole="CARRERA" ToRole="ESTUDIANTE" />
-          <NavigationProperty Name="INSCRIPCIONESTUDIANTEMATERIA" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_CARRERA" FromRole="CARRERA" ToRole="INSCRIPCIONESTUDIANTEMATERIA" />
           <NavigationProperty Name="INSCRIPCIONPROFESOR" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONPROFESOR_CARRERA" FromRole="CARRERA" ToRole="INSCRIPCIONPROFESOR" />
           <NavigationProperty Name="MATERIA" Relationship="SistemaUniversidadDBModel.FK_MATERIA_CARRERA" FromRole="CARRERA" ToRole="MATERIA" />
           <NavigationProperty Name="PLANESTUDIO" Relationship="SistemaUniversidadDBModel.FK_PLANESTUDIO_CARRERA" FromRole="CARRERA" ToRole="PLANESTUDIO" />
@@ -792,7 +699,6 @@
           <Property Name="nombreCiclo" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="carrera_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CARRERA" Relationship="SistemaUniversidadDBModel.FK_CICLO_CARRERA" FromRole="CICLO" ToRole="CARRERA" />
-          <NavigationProperty Name="INSCRIPCIONESTUDIANTEMATERIA" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_CICLO" FromRole="CICLO" ToRole="INSCRIPCIONESTUDIANTEMATERIA" />
           <NavigationProperty Name="MATERIA" Relationship="SistemaUniversidadDBModel.FK_MATERIA_CICLO" FromRole="CICLO" ToRole="MATERIA" />
           <NavigationProperty Name="PLANESTUDIO" Relationship="SistemaUniversidadDBModel.FK_PLANESTUDIO_CICLO" FromRole="CICLO" ToRole="PLANESTUDIO" />
         </EntityType>
@@ -813,14 +719,6 @@
           <Property Name="nombreEstadoEstudiante" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ESTUDIANTE" Relationship="SistemaUniversidadDBModel.FK_ESTUDIANTE_ESTADOESTUDIANTE" FromRole="ESTADOESTUDIANTE" ToRole="ESTUDIANTE" />
-        </EntityType>
-        <EntityType Name="ESTADOINSCRIPCIONESTUDIANTE">
-          <Key>
-            <PropertyRef Name="idEstadoInscripcionEstudiante" />
-          </Key>
-          <Property Name="idEstadoInscripcionEstudiante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombreEstadoInscripcionEstudiante" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="INSCRIPCIONESTUDIANTEMATERIA" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE" FromRole="ESTADOINSCRIPCIONESTUDIANTE" ToRole="INSCRIPCIONESTUDIANTEMATERIA" />
         </EntityType>
         <EntityType Name="ESTADOINSCRIPCIONPROFESOR">
           <Key>
@@ -865,6 +763,7 @@
           <Property Name="fechaRegistroEstudiante" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="carrera_id" Type="Int32" Nullable="false" />
           <Property Name="activo" Type="Boolean" />
+          <Property Name="telefono" Type="Int32" />
           <NavigationProperty Name="CARRERA" Relationship="SistemaUniversidadDBModel.FK_ESTUDIANTE_CARRERA" FromRole="ESTUDIANTE" ToRole="CARRERA" />
           <NavigationProperty Name="CIUDAD" Relationship="SistemaUniversidadDBModel.FK_ESTUDIANTE_CIUDAD" FromRole="ESTUDIANTE" ToRole="CIUDAD" />
           <NavigationProperty Name="ESTADOESTUDIANTE" Relationship="SistemaUniversidadDBModel.FK_ESTUDIANTE_ESTADOESTUDIANTE" FromRole="ESTUDIANTE" ToRole="ESTADOESTUDIANTE" />
@@ -901,18 +800,10 @@
           </Key>
           <Property Name="idInscripcionEstudianteMateria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="estudiante_id" Type="Int32" Nullable="false" />
-          <Property Name="carrera_id" Type="Int32" Nullable="false" />
-          <Property Name="ciclo_id" Type="Int32" Nullable="false" />
           <Property Name="materia_id" Type="Int32" Nullable="false" />
           <Property Name="fechaInscripcionEstudiante" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="estadoInscripcionEstudiante_id" Type="Int32" Nullable="false" />
-          <Property Name="rol_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CARRERA" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_CARRERA" FromRole="INSCRIPCIONESTUDIANTEMATERIA" ToRole="CARRERA" />
-          <NavigationProperty Name="CICLO" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_CICLO" FromRole="INSCRIPCIONESTUDIANTEMATERIA" ToRole="CICLO" />
-          <NavigationProperty Name="ESTADOINSCRIPCIONESTUDIANTE" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE" FromRole="INSCRIPCIONESTUDIANTEMATERIA" ToRole="ESTADOINSCRIPCIONESTUDIANTE" />
           <NavigationProperty Name="ESTUDIANTE" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_ESTUDIANTE" FromRole="INSCRIPCIONESTUDIANTEMATERIA" ToRole="ESTUDIANTE" />
           <NavigationProperty Name="MATERIA" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTE_MATERIA" FromRole="INSCRIPCIONESTUDIANTEMATERIA" ToRole="MATERIA" />
-          <NavigationProperty Name="ROL" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTEMATERIA_ROL" FromRole="INSCRIPCIONESTUDIANTEMATERIA" ToRole="ROL" />
         </EntityType>
         <EntityType Name="INSCRIPCIONPROFESOR">
           <Key>
@@ -969,7 +860,6 @@
           <Property Name="nombreRol" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="estadoRol" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="GESTIONMATERIA" Relationship="SistemaUniversidadDBModel.FK_GESTIONMATERIA_ROL" FromRole="ROL" ToRole="GESTIONMATERIA" />
-          <NavigationProperty Name="INSCRIPCIONESTUDIANTEMATERIA" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONESTUDIANTEMATERIA_ROL" FromRole="ROL" ToRole="INSCRIPCIONESTUDIANTEMATERIA" />
           <NavigationProperty Name="INSCRIPCIONPROFESOR" Relationship="SistemaUniversidadDBModel.FK_INSCRIPCIONPROFESOR_ROL" FromRole="ROL" ToRole="INSCRIPCIONPROFESOR" />
           <NavigationProperty Name="USUARIO" Relationship="SistemaUniversidadDBModel.FK_USUARIO_ROL" FromRole="ROL" ToRole="USUARIO" />
         </EntityType>
@@ -1031,18 +921,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_INSCRIPCIONESTUDIANTE_CARRERA">
-          <End Type="SistemaUniversidadDBModel.CARRERA" Role="CARRERA" Multiplicity="1" />
-          <End Type="SistemaUniversidadDBModel.INSCRIPCIONESTUDIANTEMATERIA" Role="INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CARRERA">
-              <PropertyRef Name="idCarrera" />
-            </Principal>
-            <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
-              <PropertyRef Name="carrera_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_INSCRIPCIONPROFESOR_CARRERA">
           <End Type="SistemaUniversidadDBModel.CARRERA" Role="CARRERA" Multiplicity="1" />
           <End Type="SistemaUniversidadDBModel.INSCRIPCIONPROFESOR" Role="INSCRIPCIONPROFESOR" Multiplicity="*" />
@@ -1076,18 +954,6 @@
             </Principal>
             <Dependent Role="PLANESTUDIO">
               <PropertyRef Name="carrera_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INSCRIPCIONESTUDIANTE_CICLO">
-          <End Type="SistemaUniversidadDBModel.CICLO" Role="CICLO" Multiplicity="1" />
-          <End Type="SistemaUniversidadDBModel.INSCRIPCIONESTUDIANTEMATERIA" Role="INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CICLO">
-              <PropertyRef Name="idCiclo" />
-            </Principal>
-            <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
-              <PropertyRef Name="ciclo_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1148,18 +1014,6 @@
             </Principal>
             <Dependent Role="ESTUDIANTE">
               <PropertyRef Name="estadoEstudiante_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INSCRIPCIONESTUDIANTE_ESTADOINSCRIPCIONESTUDIANTE">
-          <End Type="SistemaUniversidadDBModel.ESTADOINSCRIPCIONESTUDIANTE" Role="ESTADOINSCRIPCIONESTUDIANTE" Multiplicity="1" />
-          <End Type="SistemaUniversidadDBModel.INSCRIPCIONESTUDIANTEMATERIA" Role="INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ESTADOINSCRIPCIONESTUDIANTE">
-              <PropertyRef Name="idEstadoInscripcionEstudiante" />
-            </Principal>
-            <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
-              <PropertyRef Name="estadoInscripcionEstudiante_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1271,18 +1125,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_INSCRIPCIONESTUDIANTEMATERIA_ROL">
-          <End Type="SistemaUniversidadDBModel.ROL" Role="ROL" Multiplicity="1" />
-          <End Type="SistemaUniversidadDBModel.INSCRIPCIONESTUDIANTEMATERIA" Role="INSCRIPCIONESTUDIANTEMATERIA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ROL">
-              <PropertyRef Name="idRol" />
-            </Principal>
-            <Dependent Role="INSCRIPCIONESTUDIANTEMATERIA">
-              <PropertyRef Name="rol_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_INSCRIPCIONPROFESOR_ROL">
           <End Type="SistemaUniversidadDBModel.ROL" Role="ROL" Multiplicity="1" />
           <End Type="SistemaUniversidadDBModel.INSCRIPCIONPROFESOR" Role="INSCRIPCIONPROFESOR" Multiplicity="*" />
@@ -1372,14 +1214,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ESTADOINSCRIPCIONESTUDIANTE">
-            <EntityTypeMapping TypeName="SistemaUniversidadDBModel.ESTADOINSCRIPCIONESTUDIANTE">
-              <MappingFragment StoreEntitySet="ESTADOINSCRIPCIONESTUDIANTE">
-                <ScalarProperty Name="nombreEstadoInscripcionEstudiante" ColumnName="nombreEstadoInscripcionEstudiante" />
-                <ScalarProperty Name="idEstadoInscripcionEstudiante" ColumnName="idEstadoInscripcionEstudiante" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ESTADOINSCRIPCIONPROFESOR">
             <EntityTypeMapping TypeName="SistemaUniversidadDBModel.ESTADOINSCRIPCIONPROFESOR">
               <MappingFragment StoreEntitySet="ESTADOINSCRIPCIONPROFESOR">
@@ -1408,6 +1242,7 @@
           <EntitySetMapping Name="ESTUDIANTE">
             <EntityTypeMapping TypeName="SistemaUniversidadDBModel.ESTUDIANTE">
               <MappingFragment StoreEntitySet="ESTUDIANTE">
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="activo" ColumnName="activo" />
                 <ScalarProperty Name="carrera_id" ColumnName="carrera_id" />
                 <ScalarProperty Name="fechaRegistroEstudiante" ColumnName="fechaRegistroEstudiante" />
@@ -1448,12 +1283,8 @@
           <EntitySetMapping Name="INSCRIPCIONESTUDIANTEMATERIA">
             <EntityTypeMapping TypeName="SistemaUniversidadDBModel.INSCRIPCIONESTUDIANTEMATERIA">
               <MappingFragment StoreEntitySet="INSCRIPCIONESTUDIANTEMATERIA">
-                <ScalarProperty Name="rol_id" ColumnName="rol_id" />
-                <ScalarProperty Name="estadoInscripcionEstudiante_id" ColumnName="estadoInscripcionEstudiante_id" />
                 <ScalarProperty Name="fechaInscripcionEstudiante" ColumnName="fechaInscripcionEstudiante" />
                 <ScalarProperty Name="materia_id" ColumnName="materia_id" />
-                <ScalarProperty Name="ciclo_id" ColumnName="ciclo_id" />
-                <ScalarProperty Name="carrera_id" ColumnName="carrera_id" />
                 <ScalarProperty Name="estudiante_id" ColumnName="estudiante_id" />
                 <ScalarProperty Name="idInscripcionEstudianteMateria" ColumnName="idInscripcionEstudianteMateria" />
               </MappingFragment>

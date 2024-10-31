@@ -4,32 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - SistemaUniversidad v1.0</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/Login.css">
 </head>
 <body>
-    <header>
-        <h1 class="site-title">SistemaUniversidad v1.0</h1>
-    </header>
-    <div class="container">
-        <div class="signin-form">
-            <h2>Iniciar Sesión</h2>
+    <div class="login-container">
+        <div class="login-form">
+            <h2 class="login-title">SistemaUniversidad v1.0</h2>
             <form action="/Acceso/Login" method="POST">
-                @Html.AntiForgeryToken() <!-- Campo de verificación antifalsificación -->
-                <div class="input-group">
-                    <label for="username">Usuario</label>
-                    <input type="text" id="username" name="usuarioUsuario" required>
+                @Html.AntiForgeryToken()
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="username" name="usuarioUsuario" placeholder="Usuario" required>
+                    <label for="username"><i class="fas fa-user me-2"></i>Usuario</label>
                 </div>
-                <div class="input-group">
-                    <label for="password">Clave</label>
-                    <input type="password" id="password" name="claveUsuario" required>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="password" name="claveUsuario" placeholder="Contraseña" required>
+                    <label for="password"><i class="fas fa-lock me-2"></i>Contraseña</label>
                 </div>
-                <button type="submit">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-primary w-100 btn-login">Iniciar Sesión</button>
             </form>
         </div>
     </div>
+
     <footer class="footer">
-        <p>&copy; 2024 SistemaUniversidad v1.0 - Desarrollado por Gustavo E. Torres - Todos los derechos reservados.</p>
+        <p>&copy; 2024 SistemaUniversidad v1.0 - Desarrollado por Gustavo E. Torres</p>
     </footer>
+
+    <!-- Modal de error de inicio de sesión -->
+    <div class="modal fade" id="loginErrorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Error de Inicio de Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    @TempData["LoginError"]
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var loginError = '@TempData["LoginError"]';
+            if (loginError) {
+                var loginErrorModal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
+                loginErrorModal.show();
+            }
+        });
+    </script>
 </body>
 </html>

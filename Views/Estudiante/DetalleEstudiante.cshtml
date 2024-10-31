@@ -1,0 +1,172 @@
+﻿@model SistemaUniversidad.Models.ESTUDIANTE
+
+@{
+    ViewBag.Title = "Detalle Estudiante";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<style>
+    /* Estilo para aumentar el tamaño de la fuente del nombre del estudiante */
+    .nombre-estudiante {
+        font-size: 18px; /* Ajusta el tamaño según prefieras */
+    }
+
+    /* Cambia el color del encabezado "Detalle Estudiante" */
+    .custom-header {
+        background-color: #3AA4F0; /* Cambia el color según tu preferencia */
+        color: #fff; /* Color del texto del encabezado */
+    }
+
+    /* Estilo para los botones */
+    .btn-success, .btn-danger {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 0 10px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    /* Estilo para el contenedor de los botones */
+    .footer-buttons {
+        margin-top: 30px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+
+    /* Ajustar el contenedor del formulario para que no esté afectando el footer */
+    .form-container {
+        padding-bottom: 100px;
+    }
+
+    /* Estilo para poner en negrita los nombres de los label */
+    label {
+        font-weight: bold;
+    }
+
+    /* Alineación de los textos y labels */
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+        .form-group label, .form-group p {
+            width: 45%; /* Ajustar para que el label y el texto tengan tamaños proporcionales */
+            margin: 0;
+        }
+
+        .form-group p {
+            text-align: left; /* Alinear el texto a la izquierda */
+            margin-left: 15px; /* Acerca el texto al label */
+        }
+
+    /* Ajustar las columnas */
+    .col-md-6 {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+
+<div class="container mt-5 form-container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <!-- Botón para ir a la acción de inscripción de materias -->
+            <a href="@Url.Action("InscribirEstudianteMateria", "InscripcionEstudianteMateria", new { idEstudiante = Model.idEstudiante })" class="btn btn-primary">
+                Inscribir a Materias
+            </a>
+
+            <button type="button" class="btn btn-warning mr-2" onclick="location.href='@Url.Action("VerInscripciones", "InscripcionEstudianteMateria", new { idEstudiante = Model.idEstudiante })'">
+                Ver Inscripciones
+            </button>
+
+            <div class="card">
+                <div class="card-header custom-header text-center">
+                    <h4 class="mb-0">Detalle del Estudiante</h4>
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row">
+                        <!-- Columna izquierda -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="numeroLegajo">Número de Legajo</label>
+                                <p>@Html.DisplayFor(model => model.numeroLegajo)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombreEstudiante">Nombre</label>
+                                <p>@Html.DisplayFor(model => model.nombreEstudiante)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoEstudiante">Apellido</label>
+                                <p>@Html.DisplayFor(model => model.apellidoEstudiante)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="dniEstudiante">DNI</label>
+                                <p>@Html.DisplayFor(model => model.dniEstudiante)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="ciudad">Ciudad</label>
+                                <p>@Html.DisplayFor(model => model.CIUDAD.nombreCiudad)</p>
+                            </div>
+                        </div>
+
+                        <!-- Columna derecha -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="correoElectronico">Correo Electrónico</label>
+                                <p>@Html.DisplayFor(model => model.correoElectronico)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="carrera">Carrera</label>
+                                <p>@Html.DisplayFor(model => model.CARRERA.nombreCarrera)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                                <p>@Model.fechaNacimientoEstudiante.ToString("dd/MM/yyyy")</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="edadEstudiante">Edad</label>
+                                <p>@Html.DisplayFor(model => model.edadEstudiante)</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="estadoEstudiante">Estado</label>
+                                <p>@Html.DisplayFor(model => model.ESTADOESTUDIANTE.nombreEstadoEstudiante)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-buttons">
+                        <a href="@Url.Action("Index", "Estudiante")" class="btn btn-danger">Volver a la lista de Estudiantes</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

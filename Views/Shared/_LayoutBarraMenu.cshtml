@@ -1,23 +1,24 @@
-﻿<!DOCTYPE html>
+﻿@using SistemaUniversidad.Helpers
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - SistemaUniversidad v1.0</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 
+    <!-- Vincular CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/barra-menu.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/f3915ed26b.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="~/Content/BarraMenu.css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    @RenderSection("Styles", required: false)
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav>
-        <ul>
+    <nav class="navbar">
+        <ul class="menu">
             <li>
                 <a href="~/Inicio/Index" class="logo">
                     <span class="logo-text">SistemaUniversidad v1.0</span>
@@ -25,44 +26,56 @@
             </li>
             <li><a href="~/Inicio/Index">Inicio</a></li>
             <li>
-                <a href="#">Gestionar</a>
+                @if (RoleHelper.UsuarioTieneRol(new[] { "Administrador", "Auxiliar" }))
+                {
+                    <a href="#">Gestionar</a>
+                    <ul>
+                        <li><a href="~/Estudiante/Index">Estudiantes</a></li>
+                        <li><a href="~/Ciudad/Index">Ciudades</a></li>
+                        <li><a href="~/Ciclo/Index">Ciclos de Carreras</a></li>
+                        <li><a href="~/Materia/Index">Materias</a></li>
+                        <li><a href="~/Carrera/Index">Carreras</a></li>
+                        <li><a href="~/PlanEstudio/Index">Plan de Estudio</a></li>
+                        <li><a href="~/Sexo/Index">Sexo</a></li>
+                    </ul>
+                }
+            </li>
+            <li>
+                <a href="#">Gestion de Estados</a>
                 <ul>
-                    <li>
-                        <a href="#">Estados</a>
-                        <ul>
-                            <li><a href="~/EstadoEstudiante/Index">de Estudiante</a></li>
-                            <li><a href="~/EstadoUsuario/Index">de Usuario</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="~/Estudiante/Index">Estudiantes</a></li>
-                    <li><a href="~/Ciudad/Index">Ciudades</a></li>
-                    <li><a href="~/Ciclo/Index">Ciclos de Carreras</a></li>
-                    <li><a href="~/Materia/Index">Materias</a></li>
-                    <li><a href="~/Carrera/Index">Carreras</a></li>
-                    <li><a href="~/PlanEstudio/Index">Plan de Estudio</a></li>
-                    <li><a href="~/Sexo/Index">Sexo</a></li>
+                    <li><a href="~/EstadoUsuario/Index">Usuario</a></li>
+                    <li><a href="~/EstadoEstudiante/Index">Estudiante</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#">Inscripciones</a>
-                <ul>
-                    <li><a href="#">Profesor a Materia</a></li>
-                    <li><a href="~/InscripcionEstudianteMateria/Index">Estudiante a Materia</a></li>
-                </ul>
+                @if (RoleHelper.UsuarioTieneRol(new[] { "Administrador", "Auxiliar" }))
+                {
+                    <a href="#">Inscripciones</a>
+                    <ul>
+                        <li><a href="#">Profesor a Materia</a></li>
+                        <li><a href="~/InscripcionEstudianteMateria/Index">Estudiante a Materia</a></li>
+                    </ul>
+                }
             </li>
-            <li>
-                <a href="#">Gestion de Usuarios</a>
-                <ul>
-                    <li><a href="#">Profesores</a></li>
-                    <li><a href="#">Auxiliares</a></li>
-                </ul>
-            </li>
-            <li><a href="~/Usuario/Index">Registro de Usuarios</a></li>
-            <li><a href="~/Rol/Index">Gestion de Roles</a></li>
+            @if (RoleHelper.UsuarioTieneRol(new[] { "Administrador", "Auxiliar" }))
+            {
+                <li><a href="~/Usuario/Index">Gestion de Usuarios</a></li>
+                <li><a href="~/Rol/Index">Gestion de Roles</a></li>
+            }
+            @if (RoleHelper.UsuarioTieneRol(new[] { "Administrador", "Auxiliar", "Profesor" }))
+            {
+                <li><a href="~/Materia/Index">Gestion de Materias</a></li>
+            }
             <li><a href="#">Ayuda</a></li>
             <li><a href="@Url.Action("Login", "Acceso")">Cerrar Sesión</a></li>
-
         </ul>
+
+        <!-- Información del usuario a la derecha -->
+        <div class="user-info-header">
+            <span class="user-name">Usuario: @ViewBag.NombreUsuario</span>
+            <span class="user-role">(@ViewBag.Rol)</span>
+            <span class="user-nombre">@ViewBag.Nombre @ViewBag.Apellido</span>
+        </div>
     </nav>
 
     <div class="container body-content">

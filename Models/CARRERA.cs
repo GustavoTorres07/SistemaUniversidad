@@ -19,7 +19,6 @@ namespace SistemaUniversidad.Models
         {
             this.CICLO = new HashSet<CICLO>();
             this.ESTUDIANTE = new HashSet<ESTUDIANTE>();
-            this.INSCRIPCIONESTUDIANTEMATERIA = new HashSet<INSCRIPCIONESTUDIANTEMATERIA>();
             this.INSCRIPCIONPROFESOR = new HashSet<INSCRIPCIONPROFESOR>();
             this.MATERIA = new HashSet<MATERIA>();
             this.PLANESTUDIO = new HashSet<PLANESTUDIO>();
@@ -33,8 +32,6 @@ namespace SistemaUniversidad.Models
         public virtual ICollection<CICLO> CICLO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ESTUDIANTE> ESTUDIANTE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<INSCRIPCIONESTUDIANTEMATERIA> INSCRIPCIONESTUDIANTEMATERIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INSCRIPCIONPROFESOR> INSCRIPCIONPROFESOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

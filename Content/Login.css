@@ -1,122 +1,153 @@
-﻿/* Login.css */
+﻿/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    background: linear-gradient(135deg, #007BFF, #00A8FF);
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Alinea el contenido en el centro verticalmente */
-    align-items: center;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
-    padding-bottom: 4rem; /* Espacio adicional al fondo para el footer */
+    padding: 0;
+    background: linear-gradient(135deg, #0062e6, #33aeff); /* Degradado más suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
+/* Estilos del encabezado */
 header {
-    width: auto; /* Ajuste automático al contenido */
-    background: rgba(255, 255, 255, 0.8);
+    color: white;
+    text-align: center;
     padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    display: inline-block; /* Ajusta el tamaño al contenido */
-    margin-bottom: 2rem; /* Espacio entre el título y el formulario */
 }
 
 .site-title {
-    font-size: 1.5rem;
-    color: #333;
-    text-align: center;
     margin: 0;
+    font-size: 2.2rem; /* Aumento en el tamaño del título */
+    font-weight: 800; /* Más negrita */
+    letter-spacing: 1px; /* Mayor espaciado entre letras */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra sutil para mejorar la legibilidad */
 }
 
+/* Estilos del contenedor principal */
 .container {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 1.5s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
 }
 
+/* Estilos del formulario de inicio de sesión */
 .signin-form {
-    width: 300px;
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 16px; /* Esquinas más redondeadas */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    max-width: 360px; /* Ajuste de ancho */
+    width: 100%;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-    color: #333;
-    font-weight: bold;
+    /* Estilos del título del formulario */
+    .signin-form h2 {
+        margin: 0 0 1.75rem;
+        text-align: center;
+        color: #0062e6;
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase; /* Letras mayúsculas */
+    }
+
+/* Estilos de los grupos de entrada */
+.form-group {
+    margin-bottom: 1.75rem;
 }
 
-.input-group {
-    margin-bottom: 1rem;
-}
-
-    .input-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
+    /* Etiquetas de los campos */
+    .form-group label {
+        display: flex;
+        align-items: center;
+        font-size: 0.95rem;
         color: #555;
-        font-weight: bold; /* Hacer las letras de las etiquetas en negrita */
+        margin-bottom: 0.5rem;
     }
 
-    .input-group input {
+    /* Estilo para los iconos en las etiquetas */
+    .form-group i {
+        color: #0062e6;
+        margin-right: 0.6rem;
+        font-size: 1.1rem; /* Tamaño de iconos más grande */
+    }
+
+    /* Campos de entrada */
+    .form-group input {
         width: 100%;
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        transition: border 0.3s;
+        padding: 0.85rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
     }
 
-        .input-group input:focus {
-            border-color: #007BFF;
+        /* Estilo del foco en los campos de entrada */
+        .form-group input:focus {
+            border-color: #0062e6;
             outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 98, 230, 0.2);
         }
 
-button {
+/* Estilos del botón */
+button[type="submit"] {
     width: 100%;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 5px;
-    background: #007BFF;
+    padding: 0.85rem;
+    background-color: orangered;
     color: white;
-    font-size: 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-    button:hover {
-        background: #0056b3;
+    /* Estilos del botón en estado hover */
+    button[type="submit"]:hover {
+        background-color: #004bb5;
         transform: scale(1.05);
     }
 
-footer {
-    width: auto; /* Ajuste automático al contenido */
-    background: rgba(255, 255, 255, 0.8);
-    padding: 1rem;
+/* Estilos del pie de página */
+.footer {
+    background-color: #333; /* Fondo oscuro para contraste */
+    color: #fff; /* Texto blanco para visibilidad */
     text-align: center;
-    font-size: 0.875rem;
-    color: #333;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    display: inline-block; /* Ajusta el tamaño al contenido */
-    margin-top: 4rem; /* Espacio adicional entre el formulario y el footer */
-    margin-bottom: 2rem; /* Espacio adicional al fondo de la página */
+    font-size: 1rem;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; /* Asegura que el footer cubra el ancho completo */
+    border: none;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil en la parte superior del footer */
 }
 
-    footer p {
-        margin: 0;
-        font-weight: bold;
-    }
+/* Estilos para el modal */
+.modal-content {
+    border-radius: 16px; /* Esquinas redondeadas */
+    border: 1px solid #dee2e6;
+}
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
+.modal-header {
+    border-bottom: 1px solid #dee2e6;
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+}
+
+.modal-title {
+    color: #dc3545; /* Color de título del modal */
+}
+
+.modal-body {
+    font-size: 1rem;
+    color: #333; /* Color de texto del cuerpo del modal */
 }

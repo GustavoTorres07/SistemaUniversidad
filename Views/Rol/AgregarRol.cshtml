@@ -93,8 +93,8 @@
                         <div class="form-group">
                             <label for="estadoRol">Estado</label>
                             @Html.DropDownListFor(model => model.estadoRol, new SelectList(new[] {
-                                new { Value = true, Text = "Activo" },
-                                new { Value = false, Text = "Inactivo" }
+                                new { Value = true, Text = "Disponible" },
+                                new { Value = false, Text = "No  Disponible" }
                             }, "Value", "Text"), "Selecciona un estado", new { @class = "form-control custom-dropdown" })
                             @Html.ValidationMessageFor(model => model.estadoRol, "", new { @class = "text-danger" })
                         </div>

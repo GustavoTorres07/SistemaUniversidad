@@ -1,8 +1,12 @@
-﻿@model IEnumerable<SistemaUniversidad.Models.USUARIO>
+﻿@model IPagedList<SistemaUniversidad.Models.USUARIO>
+@using PagedList.Mvc;
+@using PagedList;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Usuarios";
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+    bool isSearching = !string.IsNullOrEmpty(Request.QueryString["search"]);
+    bool hasSearchResults = !isSearching || Model.Any();
 }
 
 <head>
@@ -10,42 +14,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="~/Content/tabla.css">
     <link rel="stylesheet" href="~/Content/BarraMenu.css">
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-qbp+GuLYVw8kKAtK2P7mCYX81fYj2cr29md+juVkE44Ycu15g8If2go4uS8Hg9dL/9v2U/fvf0WaO+9jqMRyVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/5/7H7h9vr6j+to6C6ih/aH+R9CEy+CExH/H+B8X" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Tabla de Usuarios</title>
 </head>
 
 <div class="container mt-5">
     <h2 class="text-center mb-4"><u>Lista de Usuarios</u></h2>
 
-    <!-- Botón para crear un nuevo usuario -->
+    <!-- Formulario de búsqueda -->
+    @using (Html.BeginForm("Index", "Usuario", FormMethod.Get))
+    {
+        <div class="mb-3">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Buscar por Nombre o Correo" value="@Request.QueryString["search"]" />
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="mb-3">
-        <a href="@Url.Action("AgregarUsuario", "Usuario")" class="btn btn-success">Registrar Nuevo Usuario</a>
+        <a href="@Url.Action("AgregarUsuario", "Usuario")" class="btn btn-success">Crear Nuevo Usuario</a>
     </div>
 
-    <div class="table-responsive">
+    <!-- Mostrar mensaje si no hay resultados -->
+    @if (isSearching && !hasSearchResults)
+    {
+        <div class="alert alert-warning mt-4">
+            No se encontraron resultados para la búsqueda.
+        </div>
+    }
+
+    <!-- Mostrar tabla de usuarios -->
+    <div class="table-responsive mt-4">
         <table class="table table-bordered">
             <thead class="bg-dark text-white">
                 <tr>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellido</th>
-                    <th class="text-center">Edad</th>
-                    <th class="text-center">DNI</th>
-                    <th class="text-center">Ciudad</th>
-                    <th class="text-center">Fecha Nacimiento</th>
-                    <th class="text-center">Email</th>
-                    <th class="text-center">Sexo</th>
                     <th class="text-center">Usuario</th>
-                    <th class="text-center">Clave Usuario</th> <!-- Cambiado para mostrar la clave encriptada -->
-                    <th class="text-center">Fecha Registro</th>
+                    <th class="text-center">Correo Electrónico</th>
                     <th class="text-center">Rol</th>
-                    <th class="text-center">Celular</th>
-                    <th class="text-center">Estado</th>
+                    <th class="text-center">Fecha Registro</th>
                     <th class="text-center">Activo?</th>
-                    <th class="text-center">Acciones</th>
+                    <th class="text-center">Funciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,26 +73,24 @@
                     <tr>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.nombreUsuario)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.apellidoUsuario)</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.edadUsuario)</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.dniUsuario)</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.CIUDAD.nombreCiudad)</td>
-                        <td class="text-center fecha-registro nowrap">@item.fechaNacimientoUsuario.ToString("dd-MM-yyyy")</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.emailUsuario)</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.SEXO.nombreSexo)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.usuarioUsuario)</td>
-                        <td class="text-center">*****</td> <!-- Mostrar ***** en lugar de la clave -->
-                        <td class="text-center fecha-registro nowrap">@item.fechaRegistroUsuario.ToString("dd-MM-yyyy")</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.emailUsuario)</td>
                         <td class="text-center">@Html.DisplayFor(modelItem => item.ROL.nombreRol)</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.celularUsuario)</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.ESTADOUSUARIO.nombreEstadoUsuario)</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.activo)</td>
+                        <td class="text-center">@item.fechaRegistroUsuario.ToString("dd-MM-yyyy")</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("EditarUsuario", "Usuario", new { idUsuario = item.idUsuario })'">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal" data-usuarioid="@item.idUsuario" data-usuarionombre="@item.nombreUsuario">
-                                Eliminar
-                            </button>
+                            @if (item.activo)
+                            {
+                                <span class="badge bg-success">Disponible</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">No Disponible</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-primary mr-2" onclick="location.href='@Url.Action("EditarUsuario", "Usuario", new { idUsuario = item.idUsuario })'">Editar</button>
+                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("DetalleUsuario", "Usuario", new { idUsuario = item.idUsuario })'">Más Info</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal" data-usuarioid="@item.idUsuario" data-usuarioUsuario="@item.usuarioUsuario">Eliminar</button>
                         </td>
                     </tr>
                 }
@@ -82,40 +99,86 @@
     </div>
 </div>
 
-<!-- Modal de Confirmación para Eliminar Usuario -->
+<!-- Paginación -->
+<div class="d-flex justify-content-center mt-4">
+    <ul class="pagination">
+        @if (Model.PageCount > 1)
+        {
+            if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber - 1, search = Request.QueryString["search"] })" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">&laquo;</span>
+                </li>
+            }
+
+            for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i, search = Request.QueryString["search"] })">@i</a>
+                </li>
+            }
+
+            if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1, search = Request.QueryString["search"] })" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">&raquo;</span>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+<!-- Modal para eliminar usuario -->
 <div class="modal fade" id="eliminarUsuarioModal" tabindex="-1" aria-labelledby="eliminarUsuarioModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="eliminarUsuarioModalLabel">Eliminar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ¿Está seguro de que desea eliminar el usuario <strong id="usuarioNombre"></strong>?
+                ¿Está seguro de que desea eliminar al usuario <strong id="usuarioUsuario"></strong>?
             </div>
             <div class="modal-footer">
-                @using (Html.BeginForm("EliminarUsuario", "Usuario", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="idUsuario" id="usuarioId" />
+                <form id="formEliminarUsuario" method="post" action="@Url.Action("EliminarUsuario", "Usuario")">
+                    @Html.AntiForgeryToken() <!-- Agrega el token antifalsificación -->
+                    <input type="hidden" id="usuarioId" name="idUsuario" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-danger">Eliminar</button>
-                }
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-@section scripts {
-    <script>
-        $('#eliminarUsuarioModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Botón que abrió el modal
-            var usuarioId = button.data('usuarioid'); // Extraer la información del atributo data-*
-            var usuarioNombre = button.data('usuarionombre'); // Extraer la información del atributo data-*
+<script>
+    // Script para manejar la asignación del ID del usuario al modal
+    var eliminarUsuarioModal = document.getElementById('eliminarUsuarioModal');
+    eliminarUsuarioModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var usuarioId = button.getAttribute('data-usuarioid');
+        var usuarioUsuario = button.getAttribute('data-usuarioUsuario');
 
-            var modal = $(this);
-            modal.find('.modal-body #usuarioNombre').text(usuarioNombre);
-            modal.find('.modal-footer #usuarioId').val(usuarioId);
-        });
-    </script>
-}
+        var modalTitle = eliminarUsuarioModal.querySelector('.modal-body #usuarioUsuario');
+        var hiddenField = eliminarUsuarioModal.querySelector('#usuarioId');
+
+        modalTitle.textContent = usuarioUsuario; // Asignar el nombre del usuario al modal
+        hiddenField.value = usuarioId; // Asignar el ID del usuario al campo oculto
+    });
+</script>

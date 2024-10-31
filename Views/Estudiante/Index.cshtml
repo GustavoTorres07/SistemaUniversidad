@@ -1,8 +1,12 @@
-﻿@model IEnumerable<SistemaUniversidad.Models.ESTUDIANTE>
+﻿@model IPagedList<SistemaUniversidad.Models.ESTUDIANTE>
+@using PagedList.Mvc;
+@using PagedList;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+    bool isSearching = !string.IsNullOrEmpty(Request.QueryString["search"]);
+    bool hasSearchResults = !isSearching || Model.Any(); // Mostrar resultados si no se está buscando o hay resultados
 }
 
 <head>
@@ -19,64 +23,106 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4"><u>Lista de Estudiantes</u></h2>
 
+    <!-- Formulario de búsqueda -->
+    @using (Html.BeginForm("Index", "Estudiante", FormMethod.Get))
+    {
+        <div class="mb-3">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Buscar por DNI o Legajo" value="@Request.QueryString["search"]" />
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="buscarDNI" name="toggle" value="true" class="form-check-input" @(Request.QueryString["toggle"] == "true" ? "checked" : "") />
+                            <label for="buscarDNI" class="form-check-label">Buscar por DNI</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="buscarLegajo" name="toggle" value="false" class="form-check-input" @(Request.QueryString["toggle"] == "false" ? "checked" : "") />
+                            <label for="buscarLegajo" class="form-check-label">Buscar por Legajo</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="mb-3">
         <a href="@Url.Action("AgregarEstudiante", "Estudiante")" class="btn btn-success">Crear Nuevo Estudiante</a>
     </div>
 
-    <div class="table-responsive">
+    <!-- Mostrar mensaje si no hay resultados después de la búsqueda -->
+    @if (isSearching && !hasSearchResults)
+    {
+        <div class="alert alert-warning mt-4">
+            No se encontraron resultados para la búsqueda.
+        </div>
+    }
+
+    <!-- Mostrar tabla de estudiantes -->
+    <div class="table-responsive mt-4">
         <table class="table table-bordered">
-            <thead class="bg-dark">
+            <thead class="bg-dark text-white">
                 <tr>
-                    <th class="text-center nowrap">Numero de Legajo</th>
-                    <th class="text-center nowrap">Nombre</th>
-                    <th class="text-center nowrap">Apellido</th>
-                    <th class="text-center nowrap">Edad</th>
-                    <th class="text-center nowrap">DNI</th>
-                    <th class="text-center nowrap">Ciudad</th>
-                    <th class="text-center nowrap">Sexo</th>
-                    <th class="text-center nowrap">Estado</th>
-                    <th class="text-center nowrap">Correo Electrónico</th>
-                    <th class="text-center nowrap">Fecha Nacimiento</th>
-                    <th class="text-center nowrap">Carrera</th>
-                    <th class="text-center nowrap">Fecha Registro</th>
-                    <th class="text-center nowrap">Activo?</th>
-                    <th class="text-center nowrap">Funciones</th>
-                    <th class="text-center nowrap">Inscribir a Materias</th>
+                    <th class="text-center">Numero de Legajo</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Apellido</th>
+                    <th class="text-center">DNI</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Correo Electrónico</th>
+                    <th class="text-center">Carrera</th>
+                    <th class="text-center">Telefono</th>
+                    <th class="text-center">Fecha Registro</th>
+                    <th class="text-center">Activo?</th>
+                    <th class="text-center">Funciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="text-center codigo-estudiante nowrap">@Html.DisplayFor(modelItem => item.numeroLegajo)</td>
-                        <td class="text-center nombre nowrap">@Html.DisplayFor(modelItem => item.nombreEstudiante)</td>
-                        <td class="text-center apellido nowrap">@Html.DisplayFor(modelItem => item.apellidoEstudiante)</td>
-                        <td class="text-center edad nowrap">@Html.DisplayFor(modelItem => item.edadEstudiante)</td>
-                        <td class="text-center dni nowrap">@Html.DisplayFor(modelItem => item.dniEstudiante)</td>
-                        <td class="text-center ciudad nowrap">@Html.DisplayFor(modelItem => item.CIUDAD.nombreCiudad)</td>
-                        <td class="text-center sexo nowrap">@Html.DisplayFor(modelItem => item.SEXO.nombreSexo)</td>
-                        <td class="text-center estado nowrap">@Html.DisplayFor(modelItem => item.ESTADOESTUDIANTE.nombreEstadoEstudiante)</td>
-                        <td class="text-center correo nowrap">@Html.DisplayFor(modelItem => item.correoElectronico)</td>
-                        <td class="text-center fecha-nacimiento nowrap">@item.fechaNacimientoEstudiante.ToString("dd-MM-yyyy")</td>
-                        <td class="text-center carrera nowrap">@Html.DisplayFor(modelItem => item.CARRERA.nombreCarrera)</td>
-                        <td class="text-center fecha-registro nowrap">@item.fechaRegistroEstudiante.ToString("dd-MM-yyyy")</td>
-                        <td class="text-center activo nowrap">@Html.DisplayFor(modelItem => item.activo)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.numeroLegajo)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.nombreEstudiante)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.apellidoEstudiante)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.dniEstudiante)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.ESTADOESTUDIANTE.nombreEstadoEstudiante)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.correoElectronico)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.CARRERA.nombreCarrera)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.telefono)</td>
+                        <td class="text-center">@item.fechaRegistroEstudiante.ToString("dd-MM-yyyy")</td>
+                        <td class="text-center">
+                            @if (item.activo.HasValue)
+                            {
+                                if (item.activo.Value)
+                                {
+                                    <span class="badge bg-success">Disponible</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">No Disponible</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-warning">Desconocido</span>
+                            }
+                        </td>
 
-                        <td class="text-center nowrap">
-                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("EditarEstudiante", "Estudiante", new { idEstudiante = item.idEstudiante })'">
+                        <td class="text-center">
+                            <button type="button" class="btn btn-primary mr-2" onclick="location.href='@Url.Action("EditarEstudiante", "Estudiante", new { idEstudiante = item.idEstudiante })'">
                                 Editar
+                            </button>
+                            <button type="button" class="btn btn-info mr-2" onclick="location.href='@Url.Action("DetalleEstudiante", "Estudiante", new { idEstudiante = item.idEstudiante })'">
+                                Mas Info
                             </button>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarEstudianteModal" data-estudianteid="@item.idEstudiante" data-estudiantenumerolegajo="@item.numeroLegajo">
                                 Eliminar
                             </button>
-                        </td>
-                        <td class="text-center nowrap">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inscripcionModal" data-id="@item.idEstudiante">
-                                Inscribir a Materias
-                            </button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inscripcionModal" data-id="@item.idEstudiante">
-                                ver PDF
-                            </button>
+                            <a href="@Url.Action("VerInscripciones", "InscripcionEstudianteMateria", new { idEstudiante = item.idEstudiante })" class="btn btn-info">Ver Inscripciones-Materias</a>
+
                         </td>
                     </tr>
                 }
@@ -85,61 +131,90 @@
     </div>
 </div>
 
+<!-- Paginación -->
+<div class="d-flex justify-content-center mt-4">
+    <ul class="pagination">
+        @if (Model.PageCount > 1)
+        {
+            if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber - 1, search = Request.QueryString["search"], toggle = Request.QueryString["toggle"] })" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">&laquo;</span>
+                </li>
+            }
+
+            @* Utiliza la directiva @ para empezar el bloque de Razor *@
+            for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i, search = Request.QueryString["search"], toggle = Request.QueryString["toggle"] })">@i</a>
+                </li>
+            }
+
+            if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1, search = Request.QueryString["search"], toggle = Request.QueryString["toggle"] })" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Siguiente</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">&raquo;</span>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
 <!-- Modal para eliminar estudiante -->
 <div class="modal fade" id="eliminarEstudianteModal" tabindex="-1" aria-labelledby="eliminarEstudianteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="eliminarEstudianteModalLabel">Eliminar Estudiante</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ¿Desea eliminar el Estudiante con el Número de Legajo <strong id="estudianteNumeroLegajo"></strong>?
+                ¿Está seguro de que desea eliminar al estudiante con el número de legajo <strong id="estudianteLegajo"></strong> ?
             </div>
             <div class="modal-footer">
-                @using (Html.BeginForm("EliminarEstudiante", "Estudiante", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="idEstudiante" id="estudianteId" />
+                <form id="formEliminarEstudiante" method="post">
+                    <input type="hidden" id="estudianteId" name="idEstudiante" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-danger">Eliminar</button>
-                }
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal para inscripción de materias -->
-<div class="modal fade" id="inscripcionModal" tabindex="-1" aria-labelledby="inscripcionModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="inscripcionModalLabel">Inscripción a Materias</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Aquí cargaremos la vista parcial con las materias -->
-                <div id="modal-body-content"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="btnGuardarInscripcion">Guardar Inscripción</button>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+    // Script para manejar la asignación del ID del estudiante al modal
+    var eliminarEstudianteModal = document.getElementById('eliminarEstudianteModal');
+    eliminarEstudianteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var estudianteId = button.getAttribute('data-estudianteid');
+        var estudianteNumeroLegajo = button.getAttribute('data-estudiantenumerolegajo');
 
-@section scripts {
-    <script>
-        $('#eliminarEstudianteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Botón que abrió el modal
-            var estudianteId = button.data('estudianteid'); // Extraer la información de los atributos data-*
-            var estudianteNumeroLegajo = button.data('estudiantenumerolegajo'); // Extraer la información de los atributos data-*
+        var modalTitle = eliminarEstudianteModal.querySelector('.modal-body #estudianteLegajo');
+        var form = eliminarEstudianteModal.querySelector('#formEliminarEstudiante');
+        form.action = '@Url.Action("EliminarEstudiante", "Estudiante")';
 
-            var modal = $(this);
-            modal.find('.modal-body #estudianteNumeroLegajo').text(estudianteNumeroLegajo);
-            modal.find('.modal-footer #estudianteId').val(estudianteId);
-        });
-
-    </script>
-}
+        modalTitle.textContent = estudianteNumeroLegajo;
+        var hiddenField = eliminarEstudianteModal.querySelector('#estudianteId');
+        hiddenField.value = estudianteId;
+    });
+</script>

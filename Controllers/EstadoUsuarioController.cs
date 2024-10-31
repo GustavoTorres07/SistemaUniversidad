@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace SistemaUniversidad.Controllers
 {
-    public class EstadoUsuarioController : Controller
+    public class EstadoUsuarioController : BaseController
     {
         private UniversidadContext db = new UniversidadContext();
         // GET: EstadoUsuario

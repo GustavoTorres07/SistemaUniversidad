@@ -1,0 +1,73 @@
+﻿@model SistemaUniversidad.ViewModels.InscripcionEstudianteMateriaVM
+
+@{
+    ViewBag.Title = "Inscribir Estudiante a Materia";
+    Layout = "~/Views/Shared/_LayoutBarraMenu.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<style>
+    .table-sm th, .table-sm td {
+        padding: 0.25rem; /* Reduce el padding interno de las celdas */
+    }
+
+    .table-sm {
+        border-collapse: collapse; /* Elimina espacios entre bordes */
+    }
+
+        .table-sm thead th {
+            background-color: #f8f9fa; /* Color de fondo para el encabezado */
+        }
+
+        .table-sm tbody tr:nth-child(odd) {
+            background-color: #f2f2f2; /* Color de fondo alternado para las filas */
+        }
+
+        .table-sm .bg-secondary {
+            font-size: 0.85rem; /* Ajusta el tamaño de fuente del encabezado del ciclo */
+            text-align: center; /* Centra el texto del encabezado */
+        }
+
+</style>
+
+<form method="post" action="@Url.Action("GuardarInscripciones", "InscripcionEstudianteMateria")">
+    @Html.Hidden("idEstudiante", Model.idEstudiante)
+
+    <div class="container">
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-sm table-bordered" style="font-size: 0.75rem; width: 100%; margin-bottom: 0;">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Ciclo</th>
+                        <th style="width: 60%;">Materia</th>
+                        <th style="width: 10%;">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ciclo in Model.MateriasPorCiclo)
+                    {
+                        <tr>
+                            <td colspan="3" class="bg-secondary text-white text-center font-weight-bold">
+                                @ciclo.NombreCiclo
+                            </td>
+                        </tr>
+                        foreach (var materia in ciclo.Materias)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>@materia.nombreMateria</td>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selectedMaterias" value="@materia.idMateria" @(materia.Inscrito ? "checked" : "") style="width: 1.25rem; height: 1.25rem;" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-sm">Guardar Inscripciones</button>
+    <a href="@Url.Action("Index", "Estudiante")" class="btn btn-secondary btn-sm">Volver al Índice</a>
+</form>

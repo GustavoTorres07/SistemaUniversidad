@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace SistemaUniversidad.Controllers
 {
-    public class RolController : Controller
+    public class RolController : BaseController
     {
         private UniversidadContext db = new UniversidadContext();
 
